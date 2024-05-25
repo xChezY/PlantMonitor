@@ -54,7 +54,7 @@ th, td {
         $header_table = "<tr><th>".implode("</th><th>",$header_array)."</th></tr>";
         for($i = 0; $i < count($rows); $i++){
             $cells = explode(",", $rows[$i]);
-            if ($cells[2] == "table"){
+            if (count($cells) == 1 || $cells[2] == "table"){
                 unset($rows[$i]);
                 continue;
             }
@@ -68,7 +68,8 @@ th, td {
         $rows = array_values($rows);
         for($i = 0; $i < $counter; $i++){
             echo "<h3>Pflanze Nr.".$i."</h3><table>".$header_table;
-            for($j = 0; $j < count($rows); $j+=$counter){
+            echo count($rows);
+            for($j = 0; $i+$j < count($rows); $j+=$counter){
                 $order = $rows[$i+$j];
                 $cells = explode(",", $order);
                 foreach($remove_attribute as $index){
