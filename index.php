@@ -18,7 +18,6 @@ th, td {
 </style>
 
 <body>
-    <table>
         <?php
 
         require_once realpath(__DIR__ . '/vendor/autoload.php');
@@ -39,33 +38,52 @@ th, td {
                     "Authorization" => "Token " . $key,
                     "Content-Type" => "application/vnd.flux"
                 ],
-                "body" => 'from(bucket: "' . $bucket . '") |> range(start: -10h) |> filter(fn: (r) => r._measurement == "' . $bucket . '")'
+                "body" => 'from(bucket: "' . $bucket . '") |> range(start: -10h)  |> filter(fn: (r) => r._measurement == "' . $bucket . '")'
             ]
         );
 
+        $remove_attribute = [0,1,8,9,10,11];
         $result_as_string = $res->getBody();
         $rows = explode("\n", $result_as_string);
-        foreach ($rows as $row) {
-            $cells = explode(",", $row);
-            unset($cells[0]);
-            unset($cells[1]);
-            unset($cells[8]);
-            unset($cells[9]);
-            unset($cells[10]);
-            unset($cells[11]);
-            echo "<tr>";
-            foreach ($cells as $cell) {
-                if ($cells[2] == "table") {
-                    echo "<th>" . $cell . "</th>";
-                    continue;
-                }
-                echo "<td>" . $cell . "</td>";
+        $counter = 0;
+        $current = "";
+        $header_array = explode(",",$rows[0]);
+        foreach($remove_attribute as $index){
+            unset($header_array[$index]);
+        }
+        $header_table = "<tr><th>".implode("</th><th>",$header_array)."</th></tr>";
+        for($i = 0; $i < count($rows); $i++){
+            $cells = explode(",", $rows[$i]);
+            if ($cells[2] == "table"){
+                unset($rows[$i]);
+                continue;
             }
-            echo "</tr>";
+            if($current == $cells[2] || $current == ""){
+                $current = $cells[2];
+                $counter++;
+                continue;
+            }
+            
+        }
+        $rows = array_values($rows);
+        for($i = 0; $i < $counter; $i++){
+            echo "<h3>Pflanze Nr.".$i."</h3><table>".$header_table;
+            for($j = 0; $j < count($rows); $j+=$counter){
+                $order = $rows[$i+$j];
+                $cells = explode(",", $order);
+                foreach($remove_attribute as $index){
+                    unset($cells[$index]);
+                }
+                echo "<tr>";
+                foreach ($cells as $cell) {
+                    echo "<td>" . $cell . "</td>";
+                }
+                echo "</tr>";
+            }
+            echo "</table>";
         }
 
         ?>
-    </table>
 </body>
 
 </html>
