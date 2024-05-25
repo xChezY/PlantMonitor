@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanMonitor</title>
 </head>
+<style>
+    table, th, td {
+  border: 1px solid;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+</style>
 
 <body>
     <table>
@@ -29,57 +39,32 @@
                     "Authorization" => "Token " . $key,
                     "Content-Type" => "application/vnd.flux"
                 ],
-                "body" => 'from(bucket: "' . $bucket . '") |> range(start: -20m) |> filter(fn: (r) => r._measurement == "ttn_vhs")'
+                "body" => 'from(bucket: "' . $bucket . '") |> range(start: -10h) |> filter(fn: (r) => r._measurement == "' . $bucket . '")'
             ]
         );
 
         $result_as_string = $res->getBody();
         $rows = explode("\n", $result_as_string);
-        //$array = explode("\n,result,table,_start,_stop,_time,_value,_field,_measurement,device_id,host,topic", $res->getBody());
-        //var_dump($rows);
-        
-
-
         foreach ($rows as $row) {
             $cells = explode(",", $row);
-            $is_header = str_starts_with($cells[1], "result");
-
-            ?>
-            <tr>
-                <?php
-                foreach ($cells as $cell) {
-                    if ($is_header) {
-                        ?>
-                        <th>
-                            <?php
-                            $cell ?>
-                        </th>
-                        <?php
-                    } else {
-                        ?>
-                        <td>
-                            <?php
-                            $cell ?>
-                        </td>
-                        <?php
-                    }
-
+            unset($cells[0]);
+            unset($cells[1]);
+            unset($cells[8]);
+            unset($cells[9]);
+            unset($cells[10]);
+            unset($cells[11]);
+            echo "<tr>";
+            foreach ($cells as $cell) {
+                if ($cells[2] == "table") {
+                    echo "<th>" . $cell . "</th>";
+                    continue;
                 }
-                ?>
-            </tr>
-            <?php
+                echo "<td>" . $cell . "</td>";
+            }
+            echo "</tr>";
         }
 
-
-
         ?>
-    </table>
-    <table>
-        <tr>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
-        </tr>
     </table>
 </body>
 
