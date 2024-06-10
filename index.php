@@ -23,6 +23,8 @@
             </progress>
             <a href="/features" class="button is-link">Virus installieren</a>
         </div>
+    </section>
+    <?php include 'assets/footer.php'; ?>
 </body>
 
 </html>
