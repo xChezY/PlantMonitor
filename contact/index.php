@@ -23,18 +23,29 @@
 
             .box {
                 margin-left: 50px;
-                width: 500px;
+
             }
 
             .box1 {
                 margin-left: 0px;
                 height: 100px;
+                height: 80px;
+                width: 400px;
 
             }
 
             .box2 {
                 margin-left: 50px;
                 margin-top: 90px;
+                width: 700px;
+            }
+
+            .image2 img{
+                float: right;
+                margin-top: -650px;
+                margin-right: 200px;
+                width: 500px;
+                height: 500px;
             }
         </style>
         <div class="container">
@@ -50,21 +61,23 @@
         <form class="box box2">
             <div class="field">
                 <h5 class="title is-5">Nachrichten direkt senden</h5>
-                <label class="label">Ihre Email</label>
                 <div class="control">
-                    <input class="input" type="email" placeholder="e.g. alex@example.com" />
+                    <input class="input" type="email" placeholder="E-Mail" />
                 </div>
-                <label class="mt-2 label">Ihren vollständigen Namen</label>
                 <div class="mt-2 control">
-                    <input class="input" type="name" placeholder="Max Mustermann" />
+                    <input class="input" type="name" placeholder="Vor-und Nachname" />
                 </div>
             </div>
 
-            <textarea class="textarea" placeholder="" rows="5"></textarea>
+            <textarea class="textarea" placeholder="Ihre Anfrage" rows="5"></textarea>
 
             <button class="mt-2 button is-primary">Abschicken</button>
         </form>
-        <?php include '../assets/footer.php'; ?>
+        <figure class="image image2">
+            <img src="https://bulma.io/assets/images/placeholders/1280x960.png" />
+        </figure>
+    </section>
+    <?php include '../assets/footer.php'; ?>
 </body>
 
 </html>
