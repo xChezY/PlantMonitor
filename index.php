@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <?php include 'assets/navbar.php'; ?>
     <section class="section">
         <div class="container">
             <h1 class="title">
@@ -20,7 +21,7 @@
             <progress class="progress is-danger" value="50" max="100">
                 15%
             </progress>
-            <button class="button is-link">Virus installieren</button>
+            <a href="/features" class="button is-link">Virus installieren</a>
         </div>
 </body>
 
