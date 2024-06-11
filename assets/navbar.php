@@ -9,15 +9,15 @@
                 Home
             </a>
 
-            <a href="/features" class="navbar-item pl-6 pr-6 has-background-dark">
+            <a href="/features" class="navbar-item pl-6 pr-6">
                 Features
             </a>
 
-            <a href="/about" class="navbar-item pl-6 pr-6 has-background-dark">
+            <a href="/#about" class="navbar-item pl-6 pr-6">
                 About us
             </a>
 
-            <a href="/contact" class="navbar-item pl-6 pr-6 has-background-dark">
+            <a href="/contact" class="navbar-item pl-6 pr-6">
                 Contact
             </a>
 

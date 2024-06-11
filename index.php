@@ -6,23 +6,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 
 <body>
     <?php include 'assets/navbar.php'; ?>
     <section class="section">
+
+        <h1 class="title">
+            PlanMonitor
+        </h1>
+        <p class="subtitle">
+            Monitor your plans
+        </p>
+        <progress class="progress is-danger" value="50" max="100">
+            15%
+        </progress>
+        <a href="/features" class="button is-link">Virus installieren</a>
+        <textarea class="textarea mt-3" placeholder="Ihre Anfrage" rows="30"></textarea>
+    </section>
+    <section class="section is-large" id="about">
         <div class="container">
-            <h1 class="title">
-                PlanMonitor
-            </h1>
-            <p class="subtitle">
-                Monitor your plans
-            </p>
-            <progress class="progress is-danger" value="50" max="100">
-                15%
-            </progress>
-            <a href="/features" class="button is-link">Virus installieren</a>
+            <div class="fixed-grid has-3-cols">
+                <div class="grid">
+                    <div class="cell">
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-1by1">
+                                    <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                                        alt="Placeholder image" />
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell is-col-span-2 ml-6">
+                        <div class="content">
+                            <p class="title">About us</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                                sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                                invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
+                                At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                                sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+    <section class="section is-large">
+        <p class="title has-text-centered mb-6">Sponsoren</p>
+        <div class="container">
+            <div class="fixed-grid has-5-cols">
+                <div class="grid">
+                    <div class="cell is-col-start-2">
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-1by1">
+                                    <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                                        alt="Placeholder image" />
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content has-text-centered">
+                                    <h5>Sponsor 1</h5>
+                                    Lorem ipsum leo risus, porta ac consectetur ac
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell is-col-start-4">
+                        <div class="card">
+                            <div class="card-image">
+                                <figure class="image is-1by1">
+                                    <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                                        alt="Placeholder image" />
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content has-text-centered">
+                                    <h5>Sponsor 2</h5>
+                                    Lorem ipsum leo risus, porta ac consectetur ac
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </section>
     <?php include 'assets/footer.php'; ?>
 </body>
