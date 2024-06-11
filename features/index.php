@@ -70,23 +70,29 @@ th, td {
             }
             
         }
+        $pflanzen = array();
         $rows = array_values($rows);
         for($i = 0; $i < $counter; $i++){
             echo "<h3>Pflanze Nr.".$i."</h3><table>".$header_table;
+            $pflanze = array();
             for($j = 0; $i+$j < count($rows); $j+=$counter){ // Goal: Sort the table by plants instead of by attributes.
                 $order = $rows[$i+$j]; // Always iterate over the n-th element of the attributes and place them into a table.
                 $cells = explode(",", $order);
                 foreach($remove_attribute as $index){
                     unset($cells[$index]);
                 }
+                $pflanze[] = $cells[6];
                 echo "<tr>";
                 foreach ($cells as $cell) {
                     echo "<td>" . $cell . "</td>";
                 }
                 echo "</tr>";
             }
+            $pflanzen[] = $pflanze; // Save the data from the fifth column of the plant into the array.
+            print_r($pflanzen);
             echo "</table>";
         }
+        print_r($pflanzen[1][0]); // Print the data from the fifth column of the second plant. DEBUGGING!
 
         ?>
 </body>
