@@ -5,19 +5,19 @@
 
     <div id="navbarBasicExample" class="navbar-menu mr-6">
         <div class="navbar-end">
-            <a href="/" class="navbar-item pl-6 pr-6 has-background-dark">
+            <a href="/" class="navbar-item pl-6 pr-6 <?php if($_SERVER['REQUEST_URI'] == "/") echo "has-background-dark"?>">
                 Home
             </a>
 
-            <a href="/features" class="navbar-item pl-6 pr-6">
+            <a href="/features" class="navbar-item pl-6 pr-6 <?php if($_SERVER['REQUEST_URI'] == "/features") echo "has-background-dark"?>">
                 Features
             </a>
 
-            <a href="/#about" class="navbar-item pl-6 pr-6">
+            <a href="/#about" class="navbar-item pl-6 pr-6 <?php if($_SERVER['REQUEST_URI'] == "/#about") echo "has-background-dark"?>">
                 About us
             </a>
 
-            <a href="/contact" class="navbar-item pl-6 pr-6">
+            <a href="/contact" class="navbar-item pl-6 pr-6 <?php if($_SERVER['REQUEST_URI'] == "/contact") echo "has-background-dark"?>">
                 Contact
             </a>
 
