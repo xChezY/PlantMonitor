@@ -123,12 +123,12 @@
             echo '<p class="has-text-centered">Um die Bodentemperatur zu verringern, sollten Sie die Pflanze in eine kühlere Umgebung stellen.</p>';
         }
 
-        echo "<h2 class='title has-text-centered mt-6'>Bodenfeuchtigkeit: " . 20.45 . " cb (Zentibar)</h2>";
-        echo '<h4 class="subtitle is-4 has-text-centered">Die Bodenfeuchtigkeit ist ' . (20.45 < 50 ? 'zu gering' : ($feuchtigkeit > 80 ? 'zu hoch' : 'optimal')) . '.</h4>';
-        if (20.45 < 50) {
+        echo "<h2 class='title has-text-centered mt-6'>Bodenfeuchtigkeit: " . $feuchtigkeit . " cb (Zentibar)</h2>";
+        echo '<h4 class="subtitle is-4 has-text-centered">Die Bodenfeuchtigkeit ist ' . ($feuchtigkeit < 50 ? 'zu gering' : ($feuchtigkeit > 80 ? 'zu hoch' : 'optimal')) . '.</h4>';
+        if ($feuchtigkeit < 50) {
             echo '<p class="has-text-centered mb-6">Um die Bodenfeuchtigkeit zu erhöhen, sollten Sie mehr Wasser hinzufügen.</p>';
         } elseif ($feuchtigkeit > 80) {
-            echo '<p class="has-text-centered">Um die Bodenfeuchtigkeit zu verringern, sollten Sie weniger Wasser hinzufügen.</p>';
+            echo '<p class="has-text-centered mb-6">Um die Bodenfeuchtigkeit zu verringern, sollten Sie weniger Wasser hinzufügen.</p>';
         }
     }
     ?>
