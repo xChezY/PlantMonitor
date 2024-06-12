@@ -18,16 +18,15 @@
     <section class="section">
 
         <h1 class="title">
-            PlanMonitor
+            PlantMonitor
         </h1>
-        <p class="subtitle">
+        <p class="subtitle mb-6">
             Monitor your plans
         </p>
-        <progress class="progress is-danger" value="50" max="100">
-            15%
-        </progress>
-        <a href="/features" class="button is-link">Virus installieren</a>
-        <textarea class="textarea mt-3" placeholder="Ihre Anfrage" rows="30"></textarea>
+
+        <p class="subtitle has-text-centered mt-6">
+            Image gallery
+        </p>
     </section>
     <section class="section is-large" id="about">
         <div class="container">

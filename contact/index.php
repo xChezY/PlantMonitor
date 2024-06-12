@@ -14,6 +14,7 @@
         <div class="container">
         <div class="columns is-multiline">
     <div class="column is-6">
+        <h1 class="title mb-6">Kontakt</h1>
         <h2 class="subtitle">textemail@mail.com</h2>
         <h2 class="subtitle">Telefonnummer</h2>
         <form class="box">
