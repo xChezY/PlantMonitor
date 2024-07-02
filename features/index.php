@@ -39,16 +39,11 @@
         ]
     );
 
-    $remove_attribute = [0, 1, 8, 9, 10, 11];
+    $remove_attribute = [0, 1, 8, 10, 11];
     $result_as_string = $res->getBody();
     $rows = explode("\n", $result_as_string);
     $counter = 0;
     $current = "";
-    $header_array = explode(",", $rows[0]);
-    foreach ($remove_attribute as $index) {
-        unset($header_array[$index]);
-    }
-    $header_table = "<tr><th>" . implode("</th><th>", $header_array) . "</th></tr>";
     for ($i = 0; $i < count($rows); $i++) {
         $cells = explode(",", $rows[$i]);
         if (count($cells) == 1 || $cells[2] == "table") { // Remove unnecessary lines when count($cells) == 1 then the line is empty and has no content. 
@@ -69,11 +64,9 @@
         for ($j = 0; $i + $j < count($rows); $j += $counter) { // Goal: Sort the table by plants instead of by attributes.
             $order = $rows[$i + $j]; // Always iterate over the n-th element of the attributes and place them into a table.
             $cells = explode(",", $order);
-            foreach ($remove_attribute as $index) {
-                unset($cells[$index]);
-            }
             $pflanze[] = $cells[6];
         }
+        $pflanze[] = explode(",", $rows[$i])[9];
         $pflanzen[] = $pflanze; // Save the data from the fifth column of the plant into the array.
     }
 
@@ -101,11 +94,12 @@
     <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $inputValue = $_POST['myInput'];
-        echo "<h1 class='title has-text-centered'>Die Pflanze mit der Nummer $inputValue hat folgende Werte:</h1>";
-
+        $device_id = $pflanzen[$inputValue][3];
         $leitfaehigkeit = $pflanzen[$inputValue][0];
         $temperatur = $pflanzen[$inputValue][1];
         $feuchtigkeit = $pflanzen[$inputValue][2];
+        
+        echo "<h1 class='title has-text-centered'>Die Pflanze mit der Timeline $inputValue und ID $device_id hat folgende Werte:</h1>";
 
         echo "<h2 class='title has-text-centered mt-6'>Bodenleitfähigkeit: " . $leitfaehigkeit . " µS</h2>";
         echo '<h4 class="subtitle is-4 has-text-centered">Die Bodenleitfähigkeit ist ' . ($leitfaehigkeit < 300 ? 'zu niedrig' : ($leitfaehigkeit > 800 ? 'zu hoch' : 'optimal')) . '.</h4>';
