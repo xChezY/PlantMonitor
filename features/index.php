@@ -10,7 +10,10 @@
 
 <body>
 
-    <?php 
+    <?php //include '../parts/navbar.php'; ?>
+    <?php //include '../includes/database.php'; 
+    //echo getPlantData(1);
+
     include '../parts/navbar.php'; 
     include '../includes/database.php'; 
 
