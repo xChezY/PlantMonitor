@@ -10,7 +10,8 @@
 
 <body>
     <?php include '../parts/navbar.php'; ?>
-    <?php
+    <?php include '../includes/database.php'; 
+    var_dump(getPlantData(1));
 
     require_once realpath(dirname(__DIR__, 1) . '/vendor/autoload.php');
     use Dotenv\Dotenv;
