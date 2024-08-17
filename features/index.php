@@ -10,10 +10,7 @@
 
 <body>
 
-    <?php //include '../parts/navbar.php'; ?>
-    <?php //include '../includes/database.php'; 
-    //echo getPlantData(1);
-
+<?php 
     include '../parts/navbar.php'; 
     include '../includes/database.php'; 
 
@@ -24,44 +21,56 @@
     $moistureMin = 50;
     $moistureMax = 80;
 
-    $plantID = $_GET["id"];
-    var_dump($plantID);
+    // Überprüfen, ob eine ID in der URL vorhanden ist
+    if (isset($_GET["id"])) {
+        $plantID = $_GET["id"];
+        $plant = getRandomPlantData($plantID);
 
-    $plant = getPlantData($plantID);
-    if ($plant != null) {
-        showValues($plant);
+        if ($plant != null) {
+            showValues($plant);
+        } else {
+            echo "<h1 class='title has-text-centered'>Pflanze mit der ID $plantID existiert nicht :(</h1>";
+        }
     } else {
-        echo "<h1 class='title has-text-centered'>Pflanze mit der ID $plantID existiert nicht :(</h1>";
+        // Wenn keine ID vorhanden ist, Formular anzeigen
+        echo '<h1 class="title has-text-centered mt-3">Sehen Sie ihre Pflanze ein!</h1>';
+        echo '<div class="columns custom-margin">
+                <div class="column is-half is-offset-one-quarter">
+                    <form method="get">
+                        <input name="id" class="input has-text-centered" type="number" min="1"
+                            placeholder="Welche Nummer hat ihre Pflanze?" />
+                        <div style="text-align: center;">
+                            <button type="submit" class="button is-info mt-2">Info</button>
+                        </div>
+                    </form>
+                </div>
+              </div>';
     }
 
-    
     function showValues($plant) {
         $temp = $plant["temp"];
         $conduct = $plant["conduct"];
         $water = $plant["water"];
-    }
 
+        // Pflanzendaten anzeigen
+        echo "<div class='columns custom-margin'>
+                <div class='column is-half is-offset-one-quarter'>
+                    <div class='box'>
+                        <h2 class='title has-text-centered'>Pflanzendaten</h2>
+                        <p><strong>Temperatur:</strong> $temp °C</p>
+                        <p><strong>Leitfähigkeit:</strong> $conduct µS/cm</p>
+                        <p><strong>Feuchtigkeit:</strong> $water %</p>
+                    </div>
+                </div>
+              </div>";
+    }
+    ?>
     
-?>
     <style>
         .custom-margin {
             margin-top: 10rem;
         }
     </style>
-
-
-    <h1 class="title has-text-centered mt-3">Sehen Sie ihre Pflanze ein!</h1>
-    <div class="columns custom-margin">
-        <div class="column is-half is-offset-one-quarter">
-            <form method="get">
-                <input name="id" class="input has-text-centered" type="number" min="1"
-                    placeholder="Welche Nummer hat ihre Pflanze?" />
-                <div style="text-align: center;">
-                    <button type="submit" class="button is-info mt-2">Info</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <?php include '../parts/footer.php'; ?>
 </body>

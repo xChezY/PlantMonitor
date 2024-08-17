@@ -31,4 +31,14 @@ function getPlantData($plantID){
     return str_replace(",_result,", "<br>", (string) $res->getBody());
 }
 
+function getRandomPlantData($plantID) {
+    //die Funktion gibt eine Pflanze (map) mit zufälligen Werten
+    //kurzzeitige Lösung um am Front-End weiter arbeiten zu können
+    $randomPlant = ["temp" => rand(-10,40), 
+    "conduct" => rand(0, 1000),
+    "water" => rand(0, 100)];
+
+    return $randomPlant;
+}
+
 ?>
