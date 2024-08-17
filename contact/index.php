@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include '../assets/navbar.php'; ?>
+    <?php include '../parts/navbar.php'; ?>
     <section class="section">
         <div class="container">
         <div class="columns is-multiline">
@@ -41,7 +41,7 @@
     </div>
 </div>
     </section>
-    <?php include '../assets/footer.php'; ?>
+    <?php include '../parts/footer.php'; ?>
 </body>
 
 </html>

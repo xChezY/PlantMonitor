@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <?php include '../assets/navbar.php'; ?>
+    <?php include '../parts/navbar.php'; ?>
     <?php
 
     require_once realpath(dirname(__DIR__, 1) . '/vendor/autoload.php');
@@ -127,7 +127,7 @@
     }
     ?>
 
-    <?php include '../assets/footer.php'; ?>
+    <?php include '../parts/footer.php'; ?>
 </body>
 
 </html>

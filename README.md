@@ -31,8 +31,8 @@ To run this project, you will need:
 2. **Configure Your Database Connection:**
    - Edit the `config.php` file and enter your database details.
 
-3. **Start Your Web Server:**
-   - Ensure your web server (e.g., Apache) is running and PHP is configured correctly.
+3. **Start Dev Server:**
+   - php -S localhost:8000 
 
 ## Usage
 
@@ -45,3 +45,4 @@ Contributions are welcome! Please create a pull request for new features or bug 
 ## License
 
 This project is licensed under the MIT License. For more details, see the `LICENSE` file.
+

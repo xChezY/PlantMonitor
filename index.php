@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <?php include 'assets/navbar.php'; ?>
+    <?php include 'parts/navbar.php'; ?>
     <section class="section">
 
         <h1 class="title">
@@ -101,7 +101,7 @@
                 </div>
             </div>
     </section>
-    <?php include 'assets/footer.php'; ?>
+    <?php include 'parts/footer.php'; ?>
 </body>
 
 </html>
