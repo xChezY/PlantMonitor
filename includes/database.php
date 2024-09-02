@@ -34,7 +34,10 @@ function getPlantData($plantID){
 function getRandomPlantData($plantID) {
     //die Funktion gibt eine Pflanze (map) mit zufälligen Werten
     //kurzzeitige Lösung um am Front-End weiter arbeiten zu können
-    $randomPlant = ["temp" => rand(-10,40), 
+    $randomPlant = ["id" => rand(1,100),
+    "date" => date("d.m.Y H:i:s"),
+    "timestamp" =>  time(),
+    "temp" => rand(-10,40), 
     "conduct" => rand(0, 1000),
     "water" => rand(0, 100)];
 
