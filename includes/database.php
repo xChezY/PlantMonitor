@@ -44,4 +44,67 @@ function getRandomPlantData($plantID) {
     return $randomPlant;
 }
 
+$plant1Measurements = [
+    [
+        "date" => "01.04.2023 10:00:00",
+        "timestamp" => 1683024000,
+        "temp" => 20, 
+        "conduct" => 500,
+        "water" => 60
+    ],
+    [
+        "date" => "02.04.2023 10:00:00",
+        "timestamp" => 1683110400,
+        "temp" => 21, 
+        "conduct" => 510,
+        "water" => 62
+    ],
+    [
+        "date" => "03.04.2023 10:00:00",
+        "timestamp" => 1683196800,
+        "temp" => 19, 
+        "conduct" => 480,
+        "water" => 58
+    ]
+];
+
+$plant2Measurements = [
+    [
+        "date" => "01.04.2023 10:00:00",
+        "timestamp" => 1683024000,
+        "temp" => 22, 
+        "conduct" => 300,
+        "water" => 70
+    ],
+    [
+        "date" => "02.04.2023 10:00:00",
+        "timestamp" => 1683110400,
+        "temp" => 23, 
+        "conduct" => 310,
+        "water" => 72
+    ],
+    [
+        "date" => "03.04.2023 10:00:00",
+        "timestamp" => 1683196800,
+        "temp" => 21, 
+        "conduct" => 290,
+        "water" => 68
+    ]
+];
+
+function getPlantByID($id){
+    global $plant1Measurements, $plant2Measurements;
+    $plant = null;
+    if($id == 1){
+        $plant = $plant1Measurements;
+    } else if($id == 2){
+        $plant = $plant2Measurements;
+    }
+    return $plant;
+}
+
+function countIDs(){
+    return 2;
+}
+
 ?>
