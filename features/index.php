@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanMonitor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    
 </head>
 
 <body>
@@ -14,6 +15,7 @@
     include '../parts/navbar.php'; 
     include '../includes/database.php'; 
 
+    $aktuellePflanze;
     $tempertureMin = 20;
     $tempertureMax = 30;
     $conductivityMin = 300;
@@ -21,51 +23,97 @@
     $moistureMin = 50;
     $moistureMax = 80;
 
-    // Überprüfen, ob eine ID in der URL vorhanden ist
-    if (isset($_GET["id"])) {
-        $plantID = $_GET["id"];
-        $plant = getRandomPlantData($plantID);
-
-        if ($plant != null) {
-            showValues($plant);
-        } else {
-            echo "<h1 class='title has-text-centered'>Pflanze mit der ID $plantID existiert nicht :(</h1>";
-        }
-    } else {
-        // Wenn keine ID vorhanden ist, Formular anzeigen
-        echo '<h1 class="title has-text-centered mt-3">Sehen Sie ihre Pflanze ein!</h1>';
-        echo '<div class="columns custom-margin">
-                <div class="column is-half is-offset-one-quarter">
-                    <form method="get">
-                        <input name="id" class="input has-text-centered" type="number" min="1"
-                            placeholder="Welche Nummer hat ihre Pflanze?" />
-                        <div style="text-align: center;">
-                            <button type="submit" class="button is-info mt-2">Info</button>
-                        </div>
-                    </form>
-                </div>
-              </div>';
-    }
-
-    function showValues($plant) {
-        $temp = $plant["temp"];
-        $conduct = $plant["conduct"];
-        $water = $plant["water"];
-
-        // Pflanzendaten anzeigen
-        echo "<div class='columns custom-margin'>
-                <div class='column is-half is-offset-one-quarter'>
-                    <div class='box'>
-                        <h2 class='title has-text-centered'>Pflanzendaten</h2>
-                        <p><strong>Temperatur:</strong> $temp °C</p>
-                        <p><strong>Leitfähigkeit:</strong> $conduct µS/cm</p>
-                        <p><strong>Feuchtigkeit:</strong> $water %</p>
-                    </div>
-                </div>
-              </div>";
-    }
+    $plant1 = getPlantData(1);
     ?>
+
     
+        <div class="field">
+            <label class="label">Wähle eine Pflanze</label>
+            <div class="control">
+                <div class="select">
+                    <select name="pflanze" id="pflanzeDropdown">
+                        <option value="">Auswählen...</option>
+                        <option value=1>Pflanze 1</option>
+                        <option value=2>Pflanze 2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <form class="box">
+            <h5 class="title is-5">Zeitpunkt der Messung</h5>
+            <div class="box" type="text">
+                <p id="datum"></p>
+            </div>
+            
+            
+                <h5 class="title is-5">Bodenleitfähigkeit in µS(Mikrosiemens) </h5>
+                <div class="box" type="text">
+                    <p id="conduct_SOIL"></p>
+                </div>
+            
+            
+                <h5 class="title is-5">Bodentemperatur in °C</h5>
+                <div class="box" type="text">
+                    <p id="temp_SOIL"></p>
+                </div>
+
+                <h5 class="title is-5">Bodenfeuchtigkeit in %</h5>
+                <div class="box" type="text">
+                    <p id="water_SOIL"></p>
+                </div>
+            
+                <h5 class="title is-5">Breitengrad</h5>
+                <div class="box" type="text">
+                    <p id="latitude"></p>
+                </div>
+            
+            
+                <h5 class="title is-5">Längengrad</h5>
+                <div class="box" type="text">
+                    <p id="longitude"></p>
+                </div>
+            
+        </form>
+ 
+
+    <script>
+         var plant1 = <?php echo json_encode($plant1); ?>;
+
+         function setFormData(plantData) {
+
+            const sortedKeys = Object.keys(plantData).sort();
+
+            sortedKeys.forEach(key => {
+                const data = plantData[key];
+            console.log("Setting form data:", plantData); // Debugging-Informationen
+            document.getElementById('datum').innerHTML = data.date;
+            document.getElementById('conduct_SOIL').innerHTML = data.conduct_SOIL;
+            document.getElementById('temp_SOIL').innerHTML = data.temp_SOIL;
+            document.getElementById('latitude').innerHTML = data.latitude;
+            document.getElementById('longitude').innerHTML = data.longitude;
+            document.getElementById('water_SOIL').innerHTML = data.water_SOIL;
+        });
+    }
+
+         // Select the dropdown element
+        const dropdown = document.querySelector('#pflanzeDropdown');
+
+            // Add an event listener for the 'change' event
+        dropdown.addEventListener('change', function(event) {
+                // Get the selected value
+            const selectedValue = event.target.value;
+                // Log the selected value to the console
+                if(selectedValue == 1){
+                    console.log('Selected value:', selectedValue);
+                    console.log(plant1);
+                    setFormData(plant1);
+                }
+        });
+
+        
+    </script>
+
     <style>
         .custom-margin {
             margin-top: 10rem;
