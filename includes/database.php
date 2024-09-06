@@ -4,7 +4,7 @@ require_once realpath(dirname(__DIR__, 1) . '/vendor/autoload.php');
 use Dotenv\Dotenv;
 use GuzzleHttp\Client;
 
-$range = "2h";
+$range = "4h";
 
 function initializeClient() {
     $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));

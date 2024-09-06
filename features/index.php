@@ -27,37 +27,38 @@
     ?>
 
 
-    <div class="field columns is-centered">
-        <div class="column is-half">
-            <label class="label">Wähle eine Pflanze</label>
-            <div class="control">
-                <div class="select">
-                    <select name="pflanze" id="pflanzeDropdown">
-                        <option value="">Auswählen...</option>
-                        <?php
-                        for ($i = 1; $i <= getIDCount(); $i++) {
-                            echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
+    <div class="pt-4 pl-6 field">
+        <label class="label">Wähle eine Pflanze</label>
+        <div class="control">
+            <div class="select">
+                <select name="pflanze" id="pflanzeDropdown">
+                    <option value="">Auswählen...</option>
+                    <?php
+                    for ($i = 1; $i <= getIDCount(); $i++) {
+                        echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
+                    }
+                    ?>
+                </select>
             </div>
         </div>
     </div>
 
     <div class="block pl-6 pr-6">
-        <nav class="panel">
+        <nav class="panel is-info">
             <p class="panel-heading">
                 Zeitpunkt der Messung
             </p>
             <p class="panel-tabs">
                 <?php
-                for ($i = 1; $i <= count($plant); $i++) {
-                    if ($i == 1) {
-                        echo '<a class="is-active" id="timestamp_' . $i . '"></a>';
-                        continue;
+                $first = true;
+
+                foreach (array_keys($plant) as $key) {
+                    if ($first) {
+                        echo '<a class="is-active clickable has-text-grey-light" id="' . $key . '"></a>';
+                        $first = false;
+                    } else {
+                        echo '<a class="clickable has-text-grey-light" id="' . $key . '"></a>';
                     }
-                    echo '<a id="timestamp_' . $i . '"></a>';
                 }
                 ?>
             </p>
@@ -110,31 +111,46 @@
         function setFormData(plantData) {
 
             const sortedKeys = Object.keys(plantData).sort();
-            var i = 1;
+            const firstdata = plantData[sortedKeys[0]];
             sortedKeys.forEach(key => {
                 const data = plantData[key];
-                document.getElementById('timestamp_' + i).innerHTML = data.date;
-                i++;
-                document.getElementById('conduct_SOIL').innerHTML = data.conduct_SOIL;
-                document.getElementById('temp_SOIL').innerHTML = data.temp_SOIL;
-                document.getElementById('latitude').innerHTML = data.latitude;
-                document.getElementById('longitude').innerHTML = data.longitude;
-                document.getElementById('water_SOIL').innerHTML = data.water_SOIL;
+                document.getElementById(key).innerHTML = data.date;
             });
+            document.getElementById('conduct_SOIL').innerHTML = firstdata.conduct_SOIL;
+            document.getElementById('temp_SOIL').innerHTML = firstdata.temp_SOIL;
+            document.getElementById('water_SOIL').innerHTML = firstdata.water_SOIL;
+            document.getElementById('latitude').innerHTML = firstdata.latitude;
+            document.getElementById('longitude').innerHTML = firstdata.longitude;
         }
 
-        // Select the dropdown element
-        const dropdown = document.querySelector('#pflanzeDropdown');
+        function changeAttributesByTimestamp(timestamp) {
+            const plantData = plant[timestamp];
+            document.getElementById('conduct_SOIL').innerHTML = plantData.conduct_SOIL;
+            document.getElementById('temp_SOIL').innerHTML = plantData.temp_SOIL;
+            document.getElementById('water_SOIL').innerHTML = plantData.water_SOIL;
+        }
 
-        // Add an event listener for the 'change' event
+        const dropdown = document.querySelector('#pflanzeDropdown');
         dropdown.addEventListener('change', function (event) {
-            // Get the selected value
             const selectedValue = event.target.value;
-            // Log the selected value to the console
             if (selectedValue == 1) {
                 console.log('Selected value:', selectedValue);
                 setFormData(plant);
             }
+        });
+
+        const links = document.querySelectorAll('a.clickable');
+
+        links.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault();
+                const activeLink = document.querySelector('a.is-active');
+                if (activeLink) {
+                    activeLink.classList.remove('is-active');
+                }
+                event.target.classList.add('is-active');
+                changeAttributesByTimestamp(event.target.id);
+            });
         });
 
 
