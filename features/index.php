@@ -14,16 +14,14 @@
     <?php
     include '../parts/navbar.php';
     include '../includes/database.php';
+    include '../includes/configured_plants.php';
+    $plantid = "lse01-vhs-projekt";
 
     $aktuellePflanze;
-    $tempertureMin = 20;
-    $tempertureMax = 30;
-    $conductivityMin = 300;
-    $conductivityMax = 800;
-    $moistureMin = 50;
-    $moistureMax = 80;
+    $configmanager = new ConfigManager();
+    $testplant = $configmanager->getPlantConfig($plantid);
 
-    $plant = getPlantData(1);
+    $plant = getPlantData($plantid);
     ?>
 
 
@@ -34,7 +32,7 @@
                 <select name="pflanze" id="pflanzeDropdown">
                     <option value="">Auswählen...</option>
                     <?php
-                    for ($i = 1; $i <= getIDCount(); $i++) {
+                    for ($i = 1; $i <= $configmanager->getCount(); $i++) {
                         echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
                     }
                     ?>
@@ -107,6 +105,12 @@
 
     <script>
         var plant = <?php echo json_encode($plant); ?>;
+        var minTemp = <?php echo $configmanager->getMinTemp($plantid); ?>;
+        var maxTemp = <?php echo $configmanager->getMaxTemp($plantid); ?>;;
+        var minConduct = <?php echo $configmanager->getMinConduct($plantid); ?>;;
+        var maxConduct = <?php echo $configmanager->getMaxConduct($plantid); ?>;;
+        var minWater = <?php echo $configmanager->getMinWater($plantid); ?>;;
+        var maxWater = <?php echo $configmanager->getMaxWater($plantid); ?>;;
 
         function setFormData(plantData) {
 

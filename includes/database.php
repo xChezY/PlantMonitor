@@ -72,7 +72,7 @@ function getPlantData($plantID) {
     $query = '
         from(bucket: "' . $bucket . '")
         |> range(start: -' . $range . ')
-        |> filter(fn: (r) => r.device_id == "lse0' . $plantID . '-vhs-projekt")
+        |> filter(fn: (r) => r.device_id == "' . $plantID . '")
         |> filter(fn: (r) => r._measurement == "ttn_vhs")
         |> filter(fn: (r) => r._field == "water_SOIL" or r._field == "temp_SOIL" or r._field == "conduct_SOIL" or r._field == "latitude" or r._field == "longitude")
         |> keep(columns: ["_time", "_value", "_field", "device_id"])
