@@ -12,7 +12,6 @@
 <body>
 
     <?php
-
     require_once  '../vendor/autoload.php';
 
     use PlantMonitor\Database;
@@ -20,17 +19,13 @@
 
     View::get("navbar");
 
+    $plantid = "lse01-vhs-projekt";
     $aktuellePflanze;
-    $tempertureMin = 20;
-    $tempertureMax = 30;
-    $conductivityMin = 300;
-    $conductivityMax = 800;
-    $moistureMin = 50;
-    $moistureMax = 80;
+    $configmanager = new ConfigManager();
+    $testplant = $configmanager->getPlantConfig($plantid);
 
     $db = new Database();
-    $plant = $db->getPlantData(1);
-    $idCount = $db->getIDCount();
+    $plant = $db->getPlantData($plantid);
     ?>
 
 
@@ -41,7 +36,7 @@
                 <select name="pflanze" id="pflanzeDropdown">
                     <option value="">Auswählen...</option>
                     <?php
-                    for ($i = 1; $i <= $idCount; $i++) {
+                    for ($i = 1; $i <= $configmanager->getCount(); $i++) {
                         echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
                     }
     ?>
@@ -114,6 +109,12 @@
 
     <script>
         var plant = <?php echo json_encode($plant); ?>;
+        var minTemp = <?php echo $configmanager->getMinTemp($plantid); ?>;
+        var maxTemp = <?php echo $configmanager->getMaxTemp($plantid); ?>;;
+        var minConduct = <?php echo $configmanager->getMinConduct($plantid); ?>;;
+        var maxConduct = <?php echo $configmanager->getMaxConduct($plantid); ?>;;
+        var minWater = <?php echo $configmanager->getMinWater($plantid); ?>;;
+        var maxWater = <?php echo $configmanager->getMaxWater($plantid); ?>;;
 
         function setFormData(plantData) {
 
