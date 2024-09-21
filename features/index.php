@@ -12,16 +12,20 @@
 <body>
 
     <?php
-    include '../parts/navbar.php';
-    include '../includes/database.php';
-    include '../includes/configured_plants.php';
-    $plantid = "lse01-vhs-projekt";
+    require_once  '../vendor/autoload.php';
 
+    use PlantMonitor\Database;
+    use PlantMonitor\View;
+
+    View::get("navbar");
+
+    $plantid = "lse01-vhs-projekt";
     $aktuellePflanze;
     $configmanager = new ConfigManager();
     $testplant = $configmanager->getPlantConfig($plantid);
 
-    $plant = getPlantData($plantid);
+    $db = new Database();
+    $plant = $db->getPlantData($plantid);
     ?>
 
 
@@ -166,7 +170,7 @@
         }
     </style>
 
-    <?php include '../parts/footer.php'; ?>
+    <?php View::get("footer"); ?>
 </body>
 
 </html>
