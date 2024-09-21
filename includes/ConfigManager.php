@@ -1,4 +1,7 @@
 <?php
+
+namespace PlantMonitor;
+
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigManager {
