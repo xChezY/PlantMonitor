@@ -44,7 +44,7 @@
                     for ($i = 1; $i <= $idCount; $i++) {
                         echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
                     }
-                    ?>
+    ?>
                 </select>
             </div>
         </div>
@@ -59,15 +59,15 @@
                 <?php
                 $first = true;
 
-                foreach (array_keys($plant) as $key) {
-                    if ($first) {
-                        echo '<a class="is-active clickable has-text-grey-light" id="' . $key . '"></a>';
-                        $first = false;
-                    } else {
-                        echo '<a class="clickable has-text-grey-light" id="' . $key . '"></a>';
-                    }
-                }
-                ?>
+    foreach (array_keys($plant) as $key) {
+        if ($first) {
+            echo '<a class="is-active clickable has-text-grey-light" id="' . $key . '"></a>';
+            $first = false;
+        } else {
+            echo '<a class="clickable has-text-grey-light" id="' . $key . '"></a>';
+        }
+    }
+    ?>
             </p>
         </nav>
     </div>

@@ -16,7 +16,7 @@ require_once '../vendor/autoload.php';
 </head>
 
 <body>
-<?php View::get( "navbar" ) ?>
+<?php View::get("navbar") ?>
 <section class="section">
     <div class="container">
         <div class="columns is-multiline">
@@ -48,7 +48,7 @@ require_once '../vendor/autoload.php';
             </div>
         </div>
 </section>
-<?php View::get( "footer" ) ?>
+<?php View::get("footer") ?>
 </body>
 
 </html>
