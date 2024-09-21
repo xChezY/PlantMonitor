@@ -12,8 +12,13 @@
 <body>
 
     <?php
-    include '../parts/navbar.php';
-    include '../includes/database.php';
+
+    require_once realpath( dirname( __DIR__, 1 ) . '/vendor/autoload.php' );
+
+    use PlantMonitor\Database;
+    use PlantMonitor\View;
+
+    View::get("navbar");
 
     $aktuellePflanze;
     $tempertureMin = 20;
@@ -23,7 +28,8 @@
     $moistureMin = 50;
     $moistureMax = 80;
 
-    $plant = getPlantData(1);
+    $db = new Database();
+    $plant = $db->getPlantData(1);
     ?>
 
 
@@ -162,7 +168,7 @@
         }
     </style>
 
-    <?php include '../parts/footer.php'; ?>
+    <?php View::get("footer"); ?>
 </body>
 
 </html>
