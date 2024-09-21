@@ -13,7 +13,7 @@
 
     <?php
 
-    require_once realpath( dirname( __DIR__, 1 ) . '/vendor/autoload.php' );
+    require_once  '../vendor/autoload.php';
 
     use PlantMonitor\Database;
     use PlantMonitor\View;
@@ -30,6 +30,7 @@
 
     $db = new Database();
     $plant = $db->getPlantData(1);
+    $idCount = $db->getIDCount();
     ?>
 
 
@@ -40,7 +41,7 @@
                 <select name="pflanze" id="pflanzeDropdown">
                     <option value="">Auswählen...</option>
                     <?php
-                    for ($i = 1; $i <= getIDCount(); $i++) {
+                    for ($i = 1; $i <= $idCount; $i++) {
                         echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
                     }
                     ?>

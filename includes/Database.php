@@ -17,13 +17,13 @@ class Database {
 	private string $bucket;
 	private $range = "4h";
 
-	public function __constructor() {
-		$dotenv = Dotenv::createImmutable( dirname( __DIR__, 1 ) );
+	public function __construct() {
+		$dotenv = Dotenv::createImmutable( __DIR__ . "/../" );
 		$dotenv->load();
 		$this->client  = new Client();
-		$this->baseURL = $_ENV['INFLUX_DB_URL'];
-		$this->apiKey  = $_ENV['INFLUX_DB_API_KEY'];
-		$this->bucket  = $_ENV["BUCKET"];
+		$this->baseURL = $_ENV['INFLUX_DB_URL'] ?? "";
+		$this->apiKey  = $_ENV['INFLUX_DB_API_KEY'] ?? "";
+		$this->bucket  = $_ENV["BUCKET"] ?? "";
 	}
 
 
@@ -46,12 +46,10 @@ class Database {
 	}
 
 	function getIDCount() {
-		global $range;
-		$bucket = $this->bucket;
 
 		$query = '
-	        from(bucket: "' . $bucket . '")
-	        |> range(start: -' . $range . ')
+	        from(bucket: "' . $this->bucket . '")
+	        |> range(start: -' . $this->range . ')
 	        |> filter(fn: (r) => exists r.device_id)
 	        |> keep(columns: ["device_id"])
 	        |> distinct(column: "device_id")
@@ -77,7 +75,6 @@ class Database {
 	}
 
 	function getPlantData( $plantID ) {
-		global $range;
 
 		$query = '
 	        from(bucket: "' . $this->bucket . '")
