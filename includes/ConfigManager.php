@@ -50,7 +50,7 @@ class ConfigManager {
 	}
 
 	public function getMinTemp( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['minTemp']["min"]??null;
+		return $this->plant_list[ $plant_id ]['temp']["min"]??null;
 	}
 
 	public function getMaxTemp( $plant_id ) {

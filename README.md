@@ -32,7 +32,7 @@ To run this project, you will need:
    - Edit the `config.php` file and enter your database details.
 
 3. **Start Dev Server:**
-   - php -S localhost:8000 
+   - composer dev
 
 ## Usage
 
