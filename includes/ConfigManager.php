@@ -4,54 +4,54 @@ namespace PlantMonitor;
 
 use Symfony\Component\Yaml\Yaml;
 
-class ConfigManager
-{
-    private $plant_list;
+class ConfigManager {
+	private $plant_list;
 
-    public function __construct()
-    {
+	/**
+	 * @throws \Exception
+	 */
+	public function __construct() {
+		$file = dirname( __DIR__, 1 ) . '/config.yaml';
+		if ( file_exists( $file ) ) {
+			$this->plant_list = Yaml::parseFile( realpath( dirname( __DIR__, 1 ) . '/config.yaml' ) )['Plants'];
+		} else {
+			throw new \Exception( "Config file not found" );
+		}
+	}
 
-        $this->plant_list = Yaml::parseFile(realpath(dirname(__DIR__, 1) . '/config.yaml'))['Plants'];
+	public function getPlantsConfig() {
+		return $this->plant_list;
+	}
 
-    }
+	public function getPlantConfig( $plant_id ) {
+		return $this->plant_list[ $plant_id ];
+	}
 
-    public function getPlantsConfig()
-    {
-        return $this->plant_list;
-    }
+	public function getCount() {
+		return count( $this->plant_list );
+	}
 
-    public function getPlantConfig($plant_id)
-    {
-        return $this->plant_list[$plant_id];
-    }
+	public function getMinConduct( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['minConduct'];
+	}
 
-    public function getCount()
-    {
-        return count($this->plant_list);
-    }
+	public function getMaxConduct( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['maxConduct'];
+	}
 
-    public function getMinConduct($plant_id)
-    {
-        return $this->plant_list[$plant_id]['minConduct'];
-    }
-    public function getMaxConduct($plant_id)
-    {
-        return $this->plant_list[$plant_id]['maxConduct'];
-    }
-    public function getMinWater($plant_id)
-    {
-        return $this->plant_list[$plant_id]['minWater'];
-    }
-    public function getMaxWater($plant_id)
-    {
-        return $this->plant_list[$plant_id]['maxWater'];
-    }
-    public function getMinTemp($plant_id)
-    {
-        return $this->plant_list[$plant_id]['minTemp'];
-    }
-    public function getMaxTemp($plant_id)
-    {
-        return $this->plant_list[$plant_id]['maxTemp'];
-    }
+	public function getMinWater( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['minWater'];
+	}
+
+	public function getMaxWater( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['maxWater'];
+	}
+
+	public function getMinTemp( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['minTemp'];
+	}
+
+	public function getMaxTemp( $plant_id ) {
+		return $this->plant_list[ $plant_id ]['maxTemp'];
+	}
 }
