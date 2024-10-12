@@ -33,6 +33,13 @@ class ConfigManager {
 		return count( $this->plant_list );
 	}
 
+	public function getAllPlantsIds(){
+		$names = array_keys($this->plant_list);
+
+		return $names;
+
+	}
+
 	public function getMinConduct( $plant_id ) {
 		return $this->plant_list[ $plant_id ]['conduct']['min']??null;
 	}

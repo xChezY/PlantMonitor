@@ -20,30 +20,43 @@
 
     View::get("navbar");
 
-    $plantid = "lse01-vhs-projekt";
+    $plantid = $_GET["plant"]??"lse01-vhs-projekt";
     $aktuellePflanze;
     $configmanager = new ConfigManager();
     $testplant = $configmanager->getPlantConfig($plantid);
 
     $db = new Database();
     $plant = $db->getPlantData($plantid);
+    
     ?>
 
+    <pre>
+        <?php print_r($plant); ?> 
+    </pre>
 
     <div class="pt-4 pl-6 field">
         <label class="label">Wähle eine Pflanze</label>
+        <form method="GET">
         <div class="control">
             <div class="select">
-                <select name="pflanze" id="pflanzeDropdown">
+                <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
                     <?php
-                    for ($i = 1; $i <= $configmanager->getCount(); $i++) {
-                        echo '<option value="' . $i . '">Pflanze ' . $i . '</option>';
-                    }
+                    foreach ($configmanager->getAllPlantsIds() as $plantId) {?>
+                        <option
+                         value="<?php echo $plantId ?>"
+                         <?php if($_GET["plant"]==$plantId) {?>
+                         selected
+                         <?php } ?>
+                         >
+                         <?php echo "Pflanze " . $plantId ?>
+                        </option>
+                    <?php }
     ?>
                 </select>
             </div>
         </div>
+        </form>
     </div>
 
     <div class="block pl-6 pr-6">
@@ -140,14 +153,19 @@
 
         function setFormData(plantData) {
 
+            // Die Daten nach den Zeit stempeln sortiert
             const sortedKeys = Object.keys(plantData).sort();
+            // neueste aus dem sortierten Array
             const firstdata = plantData[sortedKeys[0]];
+
             sortedKeys.forEach(key => {
                 const data = plantData[key];
                 document.getElementById(key).innerHTML = data.date;
             });
             document.getElementById('latitude').innerHTML = firstdata.latitude;
             document.getElementById('longitude').innerHTML = firstdata.longitude;
+
+            //anzeigen in die Plant Data
             setAttributes(firstdata);
         }
 
@@ -159,14 +177,14 @@
             setAttributes(plantData);
         }
 
-        const dropdown = document.querySelector('#pflanzeDropdown');
-        dropdown.addEventListener('change', function (event) {
-            const selectedValue = event.target.value;
-            if (selectedValue == 1) {
-                console.log('Selected value:', selectedValue);
-                setFormData(plant);
-            }
-        });
+        // const dropdown = document.querySelector('#pflanzeDropdown');
+        // dropdown.addEventListener('change', function (event) {
+        //     const selectedValue = event.target.value;
+        //     if (selectedValue == 1) {
+        //         console.log('Selected value:', selectedValue);
+        //         setFormData(plant);
+        //     }
+        // });
 
         const links = document.querySelectorAll('a.clickable');
 
