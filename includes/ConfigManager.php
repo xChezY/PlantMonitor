@@ -15,7 +15,7 @@ class ConfigManager {
 		if ( file_exists( $file ) ) {
 			$yaml_array = Yaml::parseFile( realpath( dirname( __DIR__, 1 ) . '/config.yaml' ) );
 
-			$this->plant_list = $yaml_array['Plants'] ?? [];
+			$this->plant_list = $yaml_array['plants'] ?? [];
 		} else {
 			throw new \Exception( "Config file not found" );
 		}
@@ -34,26 +34,26 @@ class ConfigManager {
 	}
 
 	public function getMinConduct( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['minConduct'];
+		return $this->plant_list[ $plant_id ]['conduct']['min']??null;
 	}
 
 	public function getMaxConduct( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['maxConduct'];
+		return $this->plant_list[ $plant_id ]['conduct']['max']??null;
 	}
 
 	public function getMinWater( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['minWater'];
+		return $this->plant_list[ $plant_id ]['water']["min"]??null;
 	}
 
 	public function getMaxWater( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['maxWater'];
+		return $this->plant_list[ $plant_id ]['water']["max"]??null;
 	}
 
 	public function getMinTemp( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['minTemp'];
+		return $this->plant_list[ $plant_id ]['minTemp']["min"]??null;
 	}
 
 	public function getMaxTemp( $plant_id ) {
-		return $this->plant_list[ $plant_id ]['maxTemp'];
+		return $this->plant_list[ $plant_id ]['temp']['max']??null;
 	}
 }
