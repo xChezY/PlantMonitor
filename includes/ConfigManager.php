@@ -13,7 +13,9 @@ class ConfigManager {
 	public function __construct() {
 		$file = dirname( __DIR__, 1 ) . '/config.yaml';
 		if ( file_exists( $file ) ) {
-			$this->plant_list = Yaml::parseFile( realpath( dirname( __DIR__, 1 ) . '/config.yaml' ) )['Plants'];
+			$yaml_array = Yaml::parseFile( realpath( dirname( __DIR__, 1 ) . '/config.yaml' ) );
+
+			$this->plant_list = $yaml_array['Plants'] ?? [];
 		} else {
 			throw new \Exception( "Config file not found" );
 		}
