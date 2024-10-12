@@ -16,6 +16,7 @@
 
     use PlantMonitor\Database;
     use PlantMonitor\View;
+    use PlantMonitor\ConfigManager;
 
     View::get("navbar");
 
@@ -116,6 +117,27 @@
         var minWater = <?php echo $configmanager->getMinWater($plantid); ?>;;
         var maxWater = <?php echo $configmanager->getMaxWater($plantid); ?>;;
 
+        function setAttributes(plantData) {
+            document.getElementById('conduct_SOIL').innerHTML = plantData.conduct_SOIL;
+            document.getElementById('temp_SOIL').innerHTML = plantData.temp_SOIL;
+            document.getElementById('water_SOIL').innerHTML = plantData.water_SOIL;
+            if (plantData.conduct_SOIL < minConduct) {
+                document.getElementById('conduct_SOIL').innerHTML = plantData.conduct_SOIL + " (zu niedrig)";
+            }else if (plantData.conduct_SOIL > maxConduct){
+                document.getElementById('conduct_SOIL').innerHTML = plantData.conduct_SOIL + " (zu hoch)";
+            }
+            if (plantData.temp_SOIL < minTemp) {
+                document.getElementById('temp_SOIL').innerHTML = plantData.temp_SOIL + " (zu kalt)";
+            }else if (plantData.temp_SOIL > maxTemp){
+                document.getElementById('temp_SOIL').innerHTML = plantData.temp_SOIL + " (zu warm)";
+            }
+            if (plantData.water_SOIL < minWater) {
+                document.getElementById('water_SOIL').innerHTML = plantData.water_SOIL + " (zu niedrig)";
+            }else if (plantData.water_SOIL > maxWater){
+                document.getElementById('water_SOIL').innerHTML = plantData.water_SOIL + " (zu hoch)";
+            }
+        }
+
         function setFormData(plantData) {
 
             const sortedKeys = Object.keys(plantData).sort();
@@ -124,11 +146,9 @@
                 const data = plantData[key];
                 document.getElementById(key).innerHTML = data.date;
             });
-            document.getElementById('conduct_SOIL').innerHTML = firstdata.conduct_SOIL;
-            document.getElementById('temp_SOIL').innerHTML = firstdata.temp_SOIL;
-            document.getElementById('water_SOIL').innerHTML = firstdata.water_SOIL;
             document.getElementById('latitude').innerHTML = firstdata.latitude;
             document.getElementById('longitude').innerHTML = firstdata.longitude;
+            setAttributes(firstdata);
         }
 
         function changeAttributesByTimestamp(timestamp) {
@@ -136,6 +156,7 @@
             document.getElementById('conduct_SOIL').innerHTML = plantData.conduct_SOIL;
             document.getElementById('temp_SOIL').innerHTML = plantData.temp_SOIL;
             document.getElementById('water_SOIL').innerHTML = plantData.water_SOIL;
+            setAttributes(plantData);
         }
 
         const dropdown = document.querySelector('#pflanzeDropdown');
