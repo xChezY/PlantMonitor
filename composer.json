@@ -10,7 +10,8 @@
     "scripts": {
         "dev" : "php -S localhost:8000",
         "cs": "vendor/bin/php-cs-fixer check",
-        "cs:fix": "vendor/bin/php-cs-fixer fix"
+        "cs:fix": "vendor/bin/php-cs-fixer fix",
+        "css": "./tailwindcss -i ./css/input.css -o ./css/output.css"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.64"
