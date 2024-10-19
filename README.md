@@ -34,6 +34,9 @@ To run this project, you will need:
 3. **Start Dev Server:**
    - composer dev
 
+4. **YAML file**
+- change the config.example.yaml to config.yaml to make the software work
+
 ## Usage
 
 Open your web browser and navigate to your local address (e.g., `http://localhost` or the appropriate URL of your web server) to access the user interface and monitor the condition of your plants in real time.
