@@ -8,7 +8,10 @@
         "psr-4": {"PlantMonitor\\": "includes/"}
     },
     "scripts": {
-        "dev" : "php -S localhost:8000",
+        "dev" : [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8000"
+        ],
         "cs": "vendor/bin/php-cs-fixer check",
         "cs:fix": "vendor/bin/php-cs-fixer fix",
         "css": "./tailwindcss -i ./css/input.css -o ./css/output.css"

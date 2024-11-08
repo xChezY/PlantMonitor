@@ -14,25 +14,16 @@
     <?php
     require_once  '../vendor/autoload.php';
 
-    use PlantMonitor\Database;
+    use PlantMonitor\Plant;
     use PlantMonitor\View;
     use PlantMonitor\ConfigManager;
 
     View::get("navbar");
 
-    $plantid = $_GET["plant"]??"lse01-vhs-projekt";
-    $aktuellePflanze;
-    $configmanager = new ConfigManager();
-    $testplant = $configmanager->getPlantConfig($plantid);
-
-    $db = new Database();
-    $plant = $db->getPlantData($plantid);
-    
+    $safeget = htmlspecialchars($_GET["plant"] ?? "", ENT_QUOTES, "UTF-8");
+    $plantid = $safeget ?: "lse01-vhs-projekt";
+    $plants = Plant::initPlants($plantid);
     ?>
-
-    <pre>
-        <?php print_r($plant); ?> 
-    </pre>
 
     <div class="pt-4 pl-6 field">
         <label class="label">Wähle eine Pflanze</label>
@@ -42,10 +33,11 @@
                 <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
                     <?php
+                    $configmanager = new ConfigManager();
                     foreach ($configmanager->getAllPlantsIds() as $plantId) {?>
                         <option
                          value="<?php echo $plantId ?>"
-                         <?php if($_GET["plant"]==$plantId) {?>
+                         <?php if(isset($safeget) && $safeget==$plantId) {?>
                          selected
                          <?php } ?>
                          >
@@ -68,12 +60,12 @@
                 <?php
                 $first = true;
 
-    foreach (array_keys($plant) as $key) {
+    foreach ($plants as $plant) {
         if ($first) {
-            echo '<a class="is-active clickable has-text-grey-light" id="' . $key . '"></a>';
+            echo '<a class="is-active clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
             $first = false;
         } else {
-            echo '<a class="clickable has-text-grey-light" id="' . $key . '"></a>';
+            echo '<a class="clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
         }
     }
     ?>
