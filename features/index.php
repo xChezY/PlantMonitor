@@ -11,103 +11,91 @@
 
 <body>
 
-    <?php
-    require_once  '../vendor/autoload.php';
+<?php
+require_once '../vendor/autoload.php';
 
-    use PlantMonitor\Database;
-    use PlantMonitor\Plant;
-    use PlantMonitor\View;
-    use PlantMonitor\ConfigManager;
+use PlantMonitor\Database;
+use PlantMonitor\Icons;
+use PlantMonitor\Plant;
+use PlantMonitor\View;
+use PlantMonitor\ConfigManager;
 
-    View::get("navbar");
+View::get( "navbar" );
 
-    $safeget = htmlspecialchars($_GET["plant"] ?? "", ENT_QUOTES, "UTF-8");
-    $plantid = $safeget ?: "lse01-vhs-projekt";
-    $plant = Plant::init($plantid);
+$safeget = htmlspecialchars( $_GET["plant"] ?? "", ENT_QUOTES, "UTF-8" );
+$plantid = $safeget ?: "lse01-vhs-projekt";
+$plant   = Plant::init( $plantid );
 
-    ?>
 
-    <div class="pt-4 pl-6 field">
-        <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
-        <form method="GET">
+?>
+
+<div class="pt-4 pl-6 field">
+    <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
+    <form method="GET">
         <div class="control">
             <div class="select">
                 <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
-                    <?php
-                    $configmanager = new ConfigManager();
-                    foreach ($configmanager->getAllPlantsIds() as $plantId) {?>
+					<?php
+					$configmanager = new ConfigManager();
+					foreach ( $configmanager->getAllPlantsIds() as $plantId ) { ?>
                         <option
-                         value="<?php echo $plantId ?>"
-                         <?php if(isset($safeget) && $safeget==$plantId) {?>
-                         selected
-                         <?php } ?>
-                         >
-                         <?php echo "Pflanze " . $plantId ?>
+                                value="<?php echo $plantId ?>"
+							<?php if ( isset( $safeget ) && $safeget == $plantId ) { ?>
+                                selected
+							<?php } ?>
+                        >
+							<?php echo "Pflanze " . $plantId ?>
                         </option>
-                    <?php }
-    ?>
+					<?php }
+					?>
                 </select>
             </div>
         </div>
-        </form>
-    </div>
+    </form>
+</div>
 
-    <div class="block pl-6 pr-6">
-        <nav class="panel is-info">
-            <p class="panel-heading">
-                Zeitpunkt der Messung
+<?php
+
+// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
+
+?>
+
+<div class="block pl-6 pr-6">
+
+    <div class="block">
+        <h5 class="title is-5">Bodenleitfähigkeit in µS(Mikrosiemens) </h5>
+        <div class="box" type="text">
+            <p id="conduct_SOIL">
+				<?php echo $plant->getConduct() ?>
             </p>
-            <p class="panel-tabs">
-                <?php
-                $first = true;
+			<?php Icons::createIcon( "conduct", $plant->getConductStatus() ); ?>
+        </div>
+    </div>
 
-//    foreach ($plants as $plant) {
-//        if ($first) {
-//            echo '<a class="is-active clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
-//            $first = false;
-//        } else {
-//            echo '<a class="clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
-//        }
-//    }
-    ?>
+    <div class="block">
+        <h5 class="title is-5">Bodentemperatur in °C</h5>
+        <div class="box" type="text">
+            <p id="temp_SOIL">
+				<?php echo $plant->getTemp() ?>
             </p>
-        </nav>
+	        <?php Icons::createIcon( "thermometer", $plant->getTempStatus() ); ?>
+        </div>
     </div>
 
-    <div class="block pl-6 pr-6">
-
-        <div class="block">
-            <h5 class="title is-5">Bodenleitfähigkeit in µS(Mikrosiemens) </h5>
-            <div class="box" type="text">
-                <p id="conduct_SOIL">
-                    <?php echo $plant->getConduct() ?>
-
-                </p>
-            </div>
+    <div class="block">
+        <h5 class="title is-5">Bodenfeuchtigkeit in %</h5>
+        <div class="box" type="text">
+            <p id="water_SOIL">
+				<?php echo $plant->getWater() ?>
+            </p>
+	        <?php Icons::createIcon( "water-drop", $plant->getWaterStatus() ); ?>
         </div>
-
-        <div class="block">
-            <h5 class="title is-5">Bodentemperatur in °C</h5>
-            <div class="box" type="text">
-                <p id="temp_SOIL">
-	                <?php echo $plant->getTemp() ?>
-                </p>
-            </div>
-        </div>
-
-        <div class="block">
-            <h5 class="title is-5">Bodenfeuchtigkeit in %</h5>
-            <div class="box" type="text">
-                <p id="water_SOIL">
-	                <?php echo $plant->getWater() ?>
-                </p>
-            </div>
-        </div>
-
     </div>
 
-    <?php View::get("footer"); ?>
+</div>
+
+<?php View::get( "footer" ); ?>
 </body>
 
 </html>

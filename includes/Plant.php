@@ -1,6 +1,7 @@
 <?php
 
 namespace PlantMonitor;
+
 use DateTime;
 
 class Plant
@@ -19,120 +20,141 @@ class Plant
         readonly float $min_water,
         readonly float $max_water,
         readonly float $water
-    ) {}
+    ) {
+    }
 
-    public function getPlantId(){
+    public function getPlantId()
+    {
         return $this->plant_id;
     }
 
-    public function getTimestamp(){
+    public function getTimestamp()
+    {
         return $this->plant_id;
     }
 
-    public function getDate(){
+    public function getDate()
+    {
         return $this->date;
     }
 
-    public function getLongitude(){
+    public function getLongitude()
+    {
         return $this->plant_id;
     }
 
-    public function getLatitude(){
+    public function getLatitude()
+    {
         return $this->plant_id;
     }
 
-    public function getMinTemp(){
+    public function getMinTemp()
+    {
         return $this->min_temp;
     }
 
-    public function getMaxTemp(){
+    public function getMaxTemp()
+    {
         return $this->max_temp;
     }
 
-    public function getTemp(){
+    public function getTemp()
+    {
         return $this->temp;
     }
 
-    public function getMinWater(){
+    public function getMinWater()
+    {
         return $this->min_water;
     }
 
-    public function getMaxWater(){
+    public function getMaxWater()
+    {
         return $this->max_water;
     }
 
 
-    public function getWater(){
+    public function getWater()
+    {
         return $this->water;
     }
 
-    public function getMinConduct(){
+    public function getMinConduct()
+    {
         return $this->min_conduct;
     }
 
-    public function getMaxConduct(){
+    public function getMaxConduct()
+    {
         return $this->max_conduct;
     }
 
 
-    public function getConduct(){
+    public function getConduct()
+    {
         return $this->conduct;
     }
 
-	//Bewertungsfunktion ob Temperatur okay ist (mithilfe von Enum)
-	public function getTempStatus(): PlantStatus{
-		return $this->evaluateValue($this->temp,$this->min_temp,$this->max_temp);
-	}
-	public function getConductStatus(): PlantStatus{
-		return $this->evaluateValue($this->conduct,$this->min_conduct,$this->max_conduct);
-	}
+    //Bewertungsfunktion ob Temperatur okay ist (mithilfe von Enum)
+    public function getTempStatus(): PlantStatus
+    {
+        return $this->evaluateValue($this->temp, $this->min_temp, $this->max_temp);
+    }
+    public function getConductStatus(): PlantStatus
+    {
+        return $this->evaluateValue($this->conduct, $this->min_conduct, $this->max_conduct);
+    }
 
-	public function getWaterStatus(): PlantStatus   {
-		return $this->evaluateValue($this->water,$this->min_water,$this->max_water);
-	}
+    public function getWaterStatus(): PlantStatus
+    {
+        return $this->evaluateValue($this->water, $this->min_water, $this->max_water);
+    }
 
-	private function evaluateValue($value,$min,$max):PlantStatus{
+    private function evaluateValue($value, $min, $max): PlantStatus
+    {
 
-			if($value > $max){
-				return PlantStatus::HIGH;
-			}
-			if($value < $min){
-				return PlantStatus::LOW;
-			}
+        if ($value > $max) {
+            return PlantStatus::HIGH;
+        }
+        if ($value < $min) {
+            return PlantStatus::LOW;
+        }
 
-			return PlantStatus::GOOD;
+        return PlantStatus::GOOD;
 
-	}
+    }
 
-    public static function init($plant_id){
+    public static function init($plant_id)
+    {
 
-	    $database = new Database();
-	    $cfg_manager = new ConfigManager();
+        $database = new Database();
+        $cfg_manager = new ConfigManager();
 
-	    $current_plant_data = $database->getPlantData($plant_id);
-	    $config_plant_data = $cfg_manager->getPlantConfig($plant_id);
+        $current_plant_data = $database->getPlantData($plant_id);
+        $config_plant_data = $cfg_manager->getPlantConfig($plant_id);
 
-	    $current_plant = end($current_plant_data);
+        $current_plant = end($current_plant_data);
 
         return new Plant(
             $plant_id,
             new DateTime($current_plant["date"]),
             $current_plant["longitude"],
             $current_plant["latitude"],
-	        $config_plant_data["temp"]["min"],
-	        $config_plant_data["temp"]["max"],
+            $config_plant_data["temp"]["min"],
+            $config_plant_data["temp"]["max"],
             $current_plant["temp_SOIL"],
-	        $config_plant_data["conduct"]["min"],
-	        $config_plant_data["conduct"]["max"],
+            $config_plant_data["conduct"]["min"],
+            $config_plant_data["conduct"]["max"],
             $current_plant["conduct_SOIL"],
-	        $config_plant_data["water"]["min"],
-	        $config_plant_data["water"]["max"],
+            $config_plant_data["water"]["min"],
+            $config_plant_data["water"]["max"],
             $current_plant["water_SOIL"],
         );
     }
 
 
-    public static function initPlants($plant_id) : array{
+    public static function initPlants($plant_id): array
+    {
 
         $plants = [];
 
@@ -142,7 +164,7 @@ class Plant
         $cfg_manager = new ConfigManager();
         $values_plant = $cfg_manager->getPlantConfig($plant_id);
 
-        foreach(array_keys($current_plant) as $timestamp){
+        foreach (array_keys($current_plant) as $timestamp) {
             array_push($plants, Plant::init($plant_id, $timestamp, $current_plant, $values_plant));
         }
 
