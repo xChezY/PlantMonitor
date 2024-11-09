@@ -28,11 +28,10 @@
     ?>
 
     <div class="pt-4 pl-6 field">
-        <label class="label">Wähle eine Pflanze</label>
+        <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
         <form method="GET">
         <div class="control">
             <div class="select">
-                <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
                 <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
                     <?php
@@ -103,20 +102,6 @@
                 <p id="water_SOIL">
 	                <?php echo $plant->getWater() ?>
                 </p>
-            </div>
-        </div>
-
-        <div class="block">
-            <h5 class="title is-5">Breitengrad</h5>
-            <div class="box" type="text">
-                <p id="latitude"></p>
-            </div>
-        </div>
-
-        <div class="block">
-            <h5 class="title is-5">Längengrad</h5>
-            <div class="box" type="text">
-                <p id="longitude"></p>
             </div>
         </div>
 
