@@ -5,29 +5,20 @@ use DateTime;
 
 class Plant
 {
-
-
     private function __construct(
         readonly string $plant_id,
-        readonly int $timestamp,
         readonly DateTime $date,
         readonly float $longitude,
         readonly float $latitude,
-        readonly float $optimal_min_temp,
-        readonly float $optimal_max_temp,
-        readonly float $absolute_min_temp,
-        readonly float $absolute_max_temp,
-        readonly float $current_temp,
-        readonly float $optimal_min_conduct,
-        readonly float $optimal_max_conduct,
-        readonly float $absolute_min_conduct,
-        readonly float $absolute_max_conduct,
-        readonly float $current_conduct,
-        readonly float $optimal_min_water,
-        readonly float $optimal_max_water,
-        readonly float $absolute_min_water,
-        readonly float $absolute_max_water,
-        readonly float $current_water
+        readonly float $min_temp,
+        readonly float $max_temp,
+        readonly float $temp,
+        readonly float $min_conduct,
+        readonly float $max_conduct,
+        readonly float $conduct,
+        readonly float $min_water,
+        readonly float $max_water,
+        readonly float $water
     ) {}
 
     public function getPlantId(){
@@ -50,92 +41,98 @@ class Plant
         return $this->plant_id;
     }
 
-    public function getOptimalMinTemp(){
-        return $this->optimal_min_temp;
+    public function getMinTemp(){
+        return $this->min_temp;
     }
 
-    public function getOptimalMaxTemp(){
-        return $this->optimal_max_temp;
+    public function getMaxTemp(){
+        return $this->max_temp;
     }
 
-    public function getAbsoluteMinTemp(){
-        return $this->absolute_min_temp;
+    public function getTemp(){
+        return $this->temp;
     }
 
-    public function getAbsoluteMaxTemp(){
-        return $this->absolute_max_temp;
+    public function getMinWater(){
+        return $this->min_water;
     }
 
-    public function getCurrentTemp(){
-        return $this->current_temp;
+    public function getMaxWater(){
+        return $this->max_water;
     }
 
-    public function getOptimalMinWater(){
-        return $this->optimal_min_water;
+
+    public function getWater(){
+        return $this->water;
     }
 
-    public function getOptimalMaxWater(){
-        return $this->optimal_max_water;
+    public function getMinConduct(){
+        return $this->min_conduct;
     }
 
-    public function getAbsoluteMinWater(){
-        return $this->absolute_min_water;
+    public function getMaxConduct(){
+        return $this->max_conduct;
     }
 
-    public function getAbsoluteMaxWater(){
-        return $this->absolute_max_water;
+
+    public function getConduct(){
+        return $this->conduct;
     }
 
-    public function getCurrentWater(){
-        return $this->current_water;
-    }
+	//Bewertungsfunktion ob Temperatur okay ist (mithilfe von Enum)
+	public function getTempStatus(): PlantStatus{
+		return $this->evaluateValue($this->temp,$this->min_temp,$this->max_temp);
+	}
+	public function getConductStatus(): PlantStatus{
+		return $this->evaluateValue($this->conduct,$this->min_conduct,$this->max_conduct);
+	}
 
-    public function getOptimalMinConduct(){
-        return $this->optimal_min_conduct;
-    }
+	public function getWaterStatus(): PlantStatus   {
+		return $this->evaluateValue($this->water,$this->min_water,$this->max_water);
+	}
 
-    public function getOptimalMaxConduct(){
-        return $this->optimal_max_conduct;
-    }
+	private function evaluateValue($value,$min,$max):PlantStatus{
 
-    public function getAbsoluteMinConduct(){
-        return $this->absolute_min_conduct;
-    }
+			if($value > $max){
+				return PlantStatus::HIGH;
+			}
+			if($value < $min){
+				return PlantStatus::LOW;
+			}
 
-    public function getAbsoluteMaxConduct(){
-        return $this->absolute_max_conduct;
-    }
+			return PlantStatus::GOOD;
 
-    public function getCurrentConduct(){
-        return $this->current_conduct;
-    }
+	}
 
-    private static function init($plant_id, $timestamp, $current_plant, $values_plant){
+    public static function init($plant_id){
+
+	    $database = new Database();
+	    $cfg_manager = new ConfigManager();
+
+	    $current_plant_data = $database->getPlantData($plant_id);
+	    $config_plant_data = $cfg_manager->getPlantConfig($plant_id);
+
+	    $current_plant = end($current_plant_data);
+
         return new Plant(
             $plant_id,
-            $timestamp,
-            new DateTime($current_plant[$timestamp]["date"]),
-            $current_plant[$timestamp]["longitude"],
-            $current_plant[$timestamp]["latitude"],
-            $values_plant["temp"]["min"],
-            $values_plant["temp"]["max"],
-            $values_plant["temp"]["min"],
-            $values_plant["temp"]["max"],
-            $current_plant[$timestamp]["temp_SOIL"],
-            $values_plant["conduct"]["min"],
-            $values_plant["conduct"]["max"],
-            $values_plant["conduct"]["min"],
-            $values_plant["conduct"]["max"],
-            $current_plant[$timestamp]["conduct_SOIL"],
-            $values_plant["water"]["min"],
-            $values_plant["water"]["max"],
-            $values_plant["water"]["min"],
-            $values_plant["water"]["max"],
-            $current_plant[$timestamp]["water_SOIL"],
+            new DateTime($current_plant["date"]),
+            $current_plant["longitude"],
+            $current_plant["latitude"],
+	        $config_plant_data["temp"]["min"],
+	        $config_plant_data["temp"]["max"],
+            $current_plant["temp_SOIL"],
+	        $config_plant_data["conduct"]["min"],
+	        $config_plant_data["conduct"]["max"],
+            $current_plant["conduct_SOIL"],
+	        $config_plant_data["water"]["min"],
+	        $config_plant_data["water"]["max"],
+            $current_plant["water_SOIL"],
         );
     }
 
-    public static function initPlants($plant_id){
+
+    public static function initPlants($plant_id) : array{
 
         $plants = [];
 

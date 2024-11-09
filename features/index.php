@@ -14,6 +14,7 @@
     <?php
     require_once  '../vendor/autoload.php';
 
+    use PlantMonitor\Database;
     use PlantMonitor\Plant;
     use PlantMonitor\View;
     use PlantMonitor\ConfigManager;
@@ -22,7 +23,8 @@
 
     $safeget = htmlspecialchars($_GET["plant"] ?? "", ENT_QUOTES, "UTF-8");
     $plantid = $safeget ?: "lse01-vhs-projekt";
-    $plants = Plant::initPlants($plantid);
+    $plant = Plant::init($plantid);
+
     ?>
 
     <div class="pt-4 pl-6 field">
@@ -30,6 +32,7 @@
         <form method="GET">
         <div class="control">
             <div class="select">
+                <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
                 <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
                     <?php
@@ -60,14 +63,14 @@
                 <?php
                 $first = true;
 
-    foreach ($plants as $plant) {
-        if ($first) {
-            echo '<a class="is-active clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
-            $first = false;
-        } else {
-            echo '<a class="clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
-        }
-    }
+//    foreach ($plants as $plant) {
+//        if ($first) {
+//            echo '<a class="is-active clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
+//            $first = false;
+//        } else {
+//            echo '<a class="clickable has-text-grey-light" id="' . $plant->getTimestamp() . '"></a>';
+//        }
+//    }
     ?>
             </p>
         </nav>
@@ -78,21 +81,28 @@
         <div class="block">
             <h5 class="title is-5">Bodenleitfähigkeit in µS(Mikrosiemens) </h5>
             <div class="box" type="text">
-                <p id="conduct_SOIL"></p>
+                <p id="conduct_SOIL">
+                    <?php echo $plant->getConduct() ?>
+
+                </p>
             </div>
         </div>
 
         <div class="block">
             <h5 class="title is-5">Bodentemperatur in °C</h5>
             <div class="box" type="text">
-                <p id="temp_SOIL"></p>
+                <p id="temp_SOIL">
+	                <?php echo $plant->getTemp() ?>
+                </p>
             </div>
         </div>
 
         <div class="block">
             <h5 class="title is-5">Bodenfeuchtigkeit in %</h5>
             <div class="box" type="text">
-                <p id="water_SOIL"></p>
+                <p id="water_SOIL">
+	                <?php echo $plant->getWater() ?>
+                </p>
             </div>
         </div>
 
@@ -111,12 +121,6 @@
         </div>
 
     </div>
-
-    <style>
-        .custom-margin {
-            margin-top: 10rem;
-        }
-    </style>
 
     <?php View::get("footer"); ?>
 </body>
