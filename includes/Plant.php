@@ -165,7 +165,7 @@ class Plant
         $values_plant = $cfg_manager->getPlantConfig($plant_id);
 
         foreach (array_keys($current_plant) as $timestamp) {
-            array_push($plants, Plant::init($plant_id, $timestamp, $current_plant, $values_plant));
+            array_push($plants, Plant::init($plant_id));
         }
 
         return $plants;
@@ -179,6 +179,6 @@ class Plant
         $cfg_manager = new ConfigManager();
         $values_plant = $cfg_manager->getPlantConfig($plant_id);
 
-        return Plant::init($plant_id, $timestamp, $current_plant, $values_plant);
+        return Plant::init($plant_id);
     }
 }
