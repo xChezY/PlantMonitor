@@ -1,5 +1,3 @@
-<nav class="navbar pt-6 pb-5 pr-6 pl-6 has-background-black" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand ml-6">
-       <p class="is-size-3 title">PlantMonitor</p>
-    </div>
+<nav class="navbar p-4" role="navigation" aria-label="main navigation">
+    <h1 class="is-size-4 title has-text-centered">PlantMonitor</h1>
 </nav>

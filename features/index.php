@@ -29,11 +29,64 @@ $plant   = Plant::init( $plantid );
 
 ?>
 
-<div class="pt-4 pl-6 field">
-    <label class="label" for="pflanzeDropdown">Wähle eine Pflanze</label>
+<?php
+
+// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
+
+?>
+<!-- TODO: Alle Elemente innerhalb der Blocks zentrieren -->
+<div class="block pl-6 pr-6">
+    <div class="block">
+        <div class="box has-text-centered" type="text">
+	        <?php
+            $waterStatus = $plant->getWaterStatus();
+            Icons::createIcon( "water-drop", $waterStatus); ?>
+            <h5 class="title is-5 pt-3">Bodenfeuchtigkeit</h5>
+            <p id="water_SOIL">
+				<?php
+                echo sprintf("%s (%s %%)",Plant::getInfoText($waterStatus), number_format($plant->getWater(), 2, ",", "."));
+                ?>
+            </p>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="box has-text-centered" type="text">
+	        <?php
+            $conductStatus = $plant->getConductStatus();
+            Icons::createIcon( "conduct", $conductStatus ); ?>
+            <h5 class="title is-5 pt-3">Bodenleitfähigkeit</h5>
+            <p id="conduct_SOIL">
+	            <?php
+	            echo sprintf("%s (%s µS)",Plant::getInfoText($conductStatus), number_format($plant->getConduct(), 1, ",", "."));
+	            ?>
+            </p>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="box has-text-centered" type="text">
+	        <?php
+            $tempStatus = $plant->getTempStatus();
+            Icons::createIcon( "thermometer", $tempStatus ); ?>
+            <h5 class="title is-5 pt-3">Bodentemperatur</h5>
+            <p id="temp_SOIL">
+	            <?php
+	            echo sprintf("%s (%s °C)",Plant::getInfoText($tempStatus), number_format($plant->getTemp(), 1, ",", "."));
+	            ?>
+            </p>
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="pt-4 px-6 field">
+    <label class="label has-text-centered" for="pflanzeDropdown">Wähle eine Pflanze</label>
     <form method="GET">
         <div class="control">
-            <div class="select">
+            <div class="select is-fullwidth">
                 <select name="plant" id="pflanzeDropdown" onchange="this.form.submit()">
                     <option value="">Auswählen...</option>
 					<?php
@@ -53,46 +106,6 @@ $plant   = Plant::init( $plantid );
             </div>
         </div>
     </form>
-</div>
-
-<?php
-
-// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
-
-?>
-
-<div class="block pl-6 pr-6">
-
-    <div class="block">
-        <h5 class="title is-5">Bodenleitfähigkeit in µS(Mikrosiemens) </h5>
-        <div class="box" type="text">
-            <p id="conduct_SOIL">
-				<?php echo $plant->getConduct() ?>
-            </p>
-			<?php Icons::createIcon( "conduct", $plant->getConductStatus() ); ?>
-        </div>
-    </div>
-
-    <div class="block">
-        <h5 class="title is-5">Bodentemperatur in °C</h5>
-        <div class="box" type="text">
-            <p id="temp_SOIL">
-				<?php echo $plant->getTemp() ?>
-            </p>
-	        <?php Icons::createIcon( "thermometer", $plant->getTempStatus() ); ?>
-        </div>
-    </div>
-
-    <div class="block">
-        <h5 class="title is-5">Bodenfeuchtigkeit in %</h5>
-        <div class="box" type="text">
-            <p id="water_SOIL">
-				<?php echo $plant->getWater() ?>
-            </p>
-	        <?php Icons::createIcon( "water-drop", $plant->getWaterStatus() ); ?>
-        </div>
-    </div>
-
 </div>
 
 <?php View::get( "footer" ); ?>

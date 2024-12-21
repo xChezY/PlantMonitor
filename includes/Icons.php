@@ -4,29 +4,14 @@ namespace PlantMonitor;
 
 class Icons {
 
-	const ARROW_UP = "⇧";
-	const ARROW_DOWN = "⇩";
-
 	public static function createIcon( string $name, PlantStatus $status ) {
 		$path = "../assets/icon-$name.svg";
 		$icon = file_get_contents( $path );
 
-		$arrow = null;
-
-		if ( $status == PlantStatus::HIGH ) {
-			$arrow = self::ARROW_UP;
-		}
-		if ( $status == PlantStatus::LOW ) {
-			$arrow = self::ARROW_DOWN;
-		}
-
-
-
 		?>
-        <div class="sensor-icon <?= $arrow?"status-bad":""; ?>">
+        <div class="sensor-icon <?= $status!=PlantStatus::GOOD?"status-bad":""; ?>">
 			<?php
 			echo $icon;
-			echo $arrow;
 			?>
             <style>
 

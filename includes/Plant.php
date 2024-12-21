@@ -181,4 +181,13 @@ class Plant
 
         return Plant::init($plant_id);
     }
+
+	public static function getInfoText($status): string{
+		return match ( $status ) {
+			PlantStatus::GOOD => "Alles in Ordnung",
+			PlantStatus::LOW => "Zu wenig",
+			PlantStatus::HIGH => "Zu viel",
+			default => "",
+		};
+	}
 }
