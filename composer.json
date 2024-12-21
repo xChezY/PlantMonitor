@@ -10,7 +10,7 @@
     "scripts": {
         "dev" : [
             "Composer\\Config::disableProcessTimeout",
-            "php -S localhost:8000"
+            "php -S 127.0.0.1:8080"
         ],
         "cs": "vendor/bin/php-cs-fixer check",
         "cs:fix": "vendor/bin/php-cs-fixer fix",
