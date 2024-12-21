@@ -8,7 +8,7 @@
                             <a class="subtitle has-text-black" href="<?php echo $_ENV['IMPRESSUM_LINK'] ?? "" ?>">Impressum </a>
                         </div>
                         <div class="cell">
-                            <a class="subtitle has-text-black" href"<?php echo $_ENV['DATENSCHUTZ_LINK'] ?? "" ?>">Datenschutz</a>
+                            <a class="subtitle has-text-black" href="<?php echo $_ENV['DATENSCHUTZ_LINK'] ?? "" ?>">Datenschutz</a>
                         </div>
                     </div>
 
