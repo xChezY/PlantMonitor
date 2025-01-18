@@ -16,7 +16,9 @@ require_once './vendor/autoload.php' ;
         }
     </style>
 </head>
-
+<?php
+echo file_exists("config.yaml")
+?>
 <body>
 <?php include 'parts/navbar.php'; ?>
 <section class="section">
