@@ -27,9 +27,6 @@ require_once './vendor/autoload.php' ;
         Monitor your plans
     </p>
 
-    <p class="subtitle has-text-centered mt-6">
-        Image gallery
-    </p>
 </section>
 <section class="section is-large" id="about">
     <div class="container">
@@ -39,7 +36,7 @@ require_once './vendor/autoload.php' ;
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-1by1">
-                                <img src="/assets/732FF582-2EB6-446A-A41E-C874B10BF9A3.jpeg"
+                                <img src="\assets\PlantWithSensor.png"
                                      alt="Merlin Hofmann"/>
                                      <figcaption>Merlin Hofmann</figcaption>
                             </figure>
