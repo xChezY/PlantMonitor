@@ -16,9 +16,6 @@ require_once './vendor/autoload.php' ;
         }
     </style>
 </head>
-<?php
-echo file_exists("config.yaml")
-?>
 <body>
 <?php include 'parts/navbar.php'; ?>
 <section class="section">
@@ -42,8 +39,9 @@ echo file_exists("config.yaml")
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-1by1">
-                                <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
-                                     alt="Placeholder image"/>
+                                <img src="/assets/732FF582-2EB6-446A-A41E-C874B10BF9A3.jpeg"
+                                     alt="Merlin Hofmann"/>
+                                     <figcaption>Merlin Hofmann</figcaption>
                             </figure>
                         </div>
                     </div>
@@ -52,14 +50,16 @@ echo file_exists("config.yaml")
                     <div class="content">
                         <p class="title">About us</p>
                         <p>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-                            invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.
-                            At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            Wir sind eine Gruppe von Jugendlichen, die im Rahmen eines Projektes des Schülerforschungszentrums Hameln-Pyrmont zusammen mit merona eine Plattform zur Überwachung von Pflanzen entwickeln.
+                        </p>
+                        <p>    
+                            Mit dieser Plattform wollen wir Leuten aus unserem Landkreis die Möglichkeit geben, die individuellen, akuten Bedürfnisse ihrer Pflanzen einfach und von Überall einzusehen.
+                        </p>
+                        <p>    
+                            Anfangs, im Januar 2024, hatten wir noch keine Vorstellung davon, was für ein Projekt wir umsetzen wollen, uns war nur klar, dass unser Projekt unserer Region langfristig helfen soll.
+                        </p>
+                        <p>    
+                            Nach Abwägung von einigen Vorschlägen, hat sich herauskristallisiert, dass wir mit dem Projekt PlantMonitor effektiv eine reale Problematik von Vereinen, sowie Privatpersonen des Landkreises lösen können.
                         </p>
                     </div>
                 </div>
