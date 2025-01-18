@@ -16,6 +16,8 @@ class Database
     private string $bucket;
     private $range = "4h";
 
+    private string $orgID;
+
     public function __construct()
     {
         $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
@@ -24,6 +26,7 @@ class Database
         $this->baseURL = $_ENV['INFLUX_DB_URL'] ?? "";
         $this->apiKey  = $_ENV['INFLUX_DB_API_KEY'] ?? "";
         $this->bucket  = $_ENV["BUCKET"] ?? "";
+        $this->orgID   = $_ENV["ORG_ID"] ?? "";
     }
 
 
@@ -39,7 +42,7 @@ class Database
                     "Content-Type"  => "application/vnd.flux",
                 ],
                 "body"    => $query,
-                "query"   => [ "orgID" => "cdfecc3b33e9176d" ] // todo: move to .env
+                "query"   => [ "orgID" => $this->orgID ] // todo: move to .env
             ]
         );
 
@@ -121,5 +124,37 @@ class Database
 
         return $map;
     }
+
+    public function getAllData()
+{
+    $query = '
+        from(bucket: "' . $this->bucket . '")
+        |> range(start: -4h)
+    ';
+
+    $response = $this->makeRequest($query);
+    return json_decode($response, true);
+}
+
+public function getAllFormattedData()
+{
+    $data = $this->getAllData();
+    $formattedData = [];
+
+    foreach ($data as $record) {
+        $timestamp = $this->convertToTimestamp($record['_time']);
+        $formattedDate = $this->formatTimestamp($timestamp);
+
+        if (!isset($formattedData[$timestamp])) {
+            $formattedData[$timestamp] = [
+                'date' => $formattedDate
+            ];
+        }
+
+        $formattedData[$timestamp][$record['_field']] = $record['_value'];
+    }
+
+    return $formattedData;
+}
 
 }
