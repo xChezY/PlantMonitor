@@ -16,9 +16,6 @@ require_once './vendor/autoload.php' ;
         }
     </style>
 </head>
-<?php
-echo file_exists("config.yaml")
-?>
 <body>
 <?php include 'parts/navbar.php'; ?>
 <section class="section">
@@ -43,7 +40,8 @@ echo file_exists("config.yaml")
                         <div class="card-image">
                             <figure class="image is-1by1">
                                 <img src="/assets/732FF582-2EB6-446A-A41E-C874B10BF9A3.jpeg"
-                                     alt="Placeholder image"/>
+                                     alt="Merlin Hofmann"/>
+                                     <figcaption>Merlin Hofmann</figcaption>
                             </figure>
                         </div>
                     </div>
