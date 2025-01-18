@@ -52,13 +52,13 @@ require_once './vendor/autoload.php' ;
                         <p>
                             Wir sind eine Gruppe von Jugendlichen, die im Rahmen eines Projektes des Schülerforschungszentrums Hameln-Pyrmont zusammen mit merona eine Plattform zur Überwachung von Pflanzen entwickeln.
                         </p>
-                        <p>    
+                        <p>
                             Mit dieser Plattform wollen wir Leuten aus unserem Landkreis die Möglichkeit geben, die individuellen, akuten Bedürfnisse ihrer Pflanzen einfach und von Überall einzusehen.
                         </p>
-                        <p>    
+                        <p>
                             Anfangs, im Januar 2024, hatten wir noch keine Vorstellung davon, was für ein Projekt wir umsetzen wollen, uns war nur klar, dass unser Projekt unserer Region langfristig helfen soll.
                         </p>
-                        <p>    
+                        <p>
                             Nach Abwägung von einigen Vorschlägen, hat sich herauskristallisiert, dass wir mit dem Projekt PlantMonitor effektiv eine reale Problematik von Vereinen, sowie Privatpersonen des Landkreises lösen können.
                         </p>
                     </div>
@@ -68,22 +68,22 @@ require_once './vendor/autoload.php' ;
     </div>
 </section>
 <section class="section is-large">
-    <p class="title has-text-centered mb-6">Sponsoren</p>
+    <p class="title has-text-centered mb-6">Unterstüzung</p>
     <div class="container">
         <div class="fixed-grid has-5-cols">
             <div class="grid">
                 <div class="cell is-col-start-2">
                     <div class="card">
                         <div class="card-image">
-                            <figure class="image is-1by1">
-                                <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
+                            <figure class="image">
+                                <img src="\assets\SmartCityLogo.png"
                                      alt="Placeholder image"/>
                             </figure>
                         </div>
                         <div class="card-content">
                             <div class="content has-text-centered">
-                                <h5>Sponsor 1</h5>
-                                Lorem ipsum leo risus, porta ac consectetur ac
+                                <h5>Ha-Py Smart City</h5>
+                                Ideen und Projekte für eine liebenswerte und lebenswerte Zukunft im Landkreis Hameln-Pyrmont
                             </div>
                         </div>
                     </div>
@@ -91,15 +91,14 @@ require_once './vendor/autoload.php' ;
                 <div class="cell is-col-start-4">
                     <div class="card">
                         <div class="card-image">
-                            <figure class="image is-1by1">
-                                <img src="https://bulma.io/assets/images/placeholders/1280x960.png"
-                                     alt="Placeholder image"/>
+                            <figure class="image" style="padding: 20px";>
+                                <img src="\assets\merona-schriftzug-neu.svg"/>
                             </figure>
                         </div>
                         <div class="card-content">
                             <div class="content has-text-centered">
-                                <h5>Sponsor 2</h5>
-                                Lorem ipsum leo risus, porta ac consectetur ac
+                                <h5>merona</h5>
+                                Projektbegleitung während der Treffen und Unterstützung bei der Umsetzung unserer Ideen und Konzepte.
                             </div>
                         </div>
                     </div>
