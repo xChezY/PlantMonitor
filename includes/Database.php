@@ -2,9 +2,12 @@
 
 namespace PlantMonitor;
 
+require_once 'constants.php'; // Include the constants.php file
+
 use DateTime;
 use Dotenv\Dotenv;
 use GuzzleHttp\Client;
+use Exception;
 
 class Database
 {
@@ -18,8 +21,13 @@ class Database
 
     private string $orgID;
 
+    private $plantsLabelingInDB;
+
     public function __construct()
     {
+
+        $this->plantsLabelingInDB = getDBLabeling();
+
         $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
         $dotenv->load();
         $this->client  = new Client(["verify" => false]);
@@ -82,48 +90,68 @@ class Database
     }
 
     public function getPlantData($plantID)
-    {
+{
 
-        $query = '
-	        from(bucket: "' . $this->bucket . '")
-	        |> range(start: -' . $this->range . ')
-	        |> filter(fn: (r) => r.deviceName == "' . $plantID . '")
-	        |> filter(fn: (r) => r._measurement == "coop_garden")
-	        |> filter(fn: (r) => r._field == "Rain" or r._field == "Temperature" or r._field == "conduct_SOIL" or r._field == "location_latitude" or r._field == "location_longitude")
-	        |> keep(columns: ["_time", "_value", "_field", "deviceName"])
-	    ';
+    console_log($this->plantsLabelingInDB);
+    console_log($plantID);
+    // Überprüfen, ob das plantID im plantsLabelingInDB-Array existiert
+    if (!isset($this->plantsLabelingInDB[$plantID])) {
+        echo("Plant ID not found in plantsLabelingInDB");
+    }
 
-        $formatteddata = explode(",_result,", str_replace(",result,", "", $this->makeRequest($query)));
+    // Holen Sie sich die Daten für das spezifische plantID
+    $plantData = $this->plantsLabelingInDB[$plantID];
 
-        $header = str_getcsv(array_shift($formatteddata));
+    // Erstellen Sie den Filter-String dynamisch basierend auf den Feldern im plantData-Array
+    $fields = array_keys($plantData);
+    $fieldFilters = implode(' or ', array_map(function($field) use ($plantData) {
+        return 'r._field == "' . $plantData[$field] . '"';
+    }, $fields));
 
-        $map = [];
+    $query = '
+        from(bucket: "' . $this->bucket . '")
+        |> range(start: -' . $this->range . ')
+        |> filter(fn: (r) => r.' . $plantData['DEVICEIDORNAME'] . ' == "' . $plantID . '")
+        |> filter(fn: (r) => r._measurement == "' . $plantData['MEASUREMENT'] . '")
+        |> filter(fn: (r) => ' . $fieldFilters . ')
+        |> keep(columns: ["_time", "_value", "_field", "' . $plantData['DEVICEIDORNAME'] . '"])
+    ';
 
+    console_log($query);
 
-        foreach ($formatteddata as $line) {
-            $values = str_getcsv($line);
+    $formatteddata = explode(",_result,", str_replace(",result,", "", $this->makeRequest($query)));
 
-            if (count($values) < count($header)) {
-                continue;
-            }
+    console_log($formatteddata);
 
-            list($table, $time, $value, $field, $deviceName) = $values;
+    $header = str_getcsv(array_shift($formatteddata));
 
-            $timestamp = $this->convertToTimestamp($time);
+    $map = [];
 
-            $formattedDate = $this->formatTimestamp($timestamp);
+    foreach ($formatteddata as $line) {
+        $values = str_getcsv($line);
 
-            if (! isset($map[ $timestamp ])) {
-                $map[ $timestamp ] = [
-                    'date' => $formattedDate
-                ];
-            }
-
-            $map[ $timestamp ][ $field ] = $value;
+        if (count($values) < count($header)) {
+            continue;
         }
 
-        return $map;
+        list($table, $time, $value, $field, $deviceName) = $values;
+
+        $timestamp = $this->convertToTimestamp($time);
+
+        $formattedDate = $this->formatTimestamp($timestamp);
+
+        if (!isset($map[$timestamp])) {
+            $map[$timestamp] = [
+                'date' => $formattedDate
+            ];
+        }
+
+        $map[$timestamp][$field] = $value;
     }
+
+    console_log($map);
+    return $map;
+}
 
     public function getAllData()
 {

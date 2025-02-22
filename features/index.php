@@ -23,10 +23,11 @@ use PlantMonitor\ConfigManager;
 View::get( "navbar" );
 
 $safeget = htmlspecialchars( $_GET["plant"] ?? "", ENT_QUOTES, "UTF-8" );
-$plantid = $safeget ?: "Mitwirkgarten-Barani-MeteoHelix-1";
+$plantid = $safeget ?: "lse01-vhs-projekt";
 $plant   = Plant::init( $plantid );
 
-
+console_log("plant");
+console_log( $plant );
 ?>
 
 <?php
@@ -44,7 +45,11 @@ $plant   = Plant::init( $plantid );
             <h5 class="title is-5 pt-3">Bodenfeuchtigkeit</h5>
             <p id="water_SOIL">
 				<?php
-                echo sprintf("%s (%s %%)",Plant::getInfoText($waterStatus), number_format($plant->getWater(), 2, ",", "."));
+                if($plant->getWater() == getBigValue()){ 
+                    echo showExplanationForNoValue();
+                } else {
+                    echo sprintf("%s (%s %%)",Plant::getInfoText($waterStatus), number_format($plant->getWater(), 2, ",", "."));
+                }
                 ?>
             </p>
         </div>
@@ -58,7 +63,11 @@ $plant   = Plant::init( $plantid );
             <h5 class="title is-5 pt-3">Bodenleitfähigkeit</h5>
             <p id="conduct_SOIL">
 	            <?php
-	            echo sprintf("%s (%s µS)",Plant::getInfoText($conductStatus), number_format($plant->getConduct(), 1, ",", "."));
+                if($plant->getConduct() == getBigValue()){ 
+                    echo showExplanationForNoValue();
+                } else {
+                    echo sprintf("%s (%s µS)",Plant::getInfoText($conductStatus), number_format($plant->getConduct(), 1, ",", "."));
+	            }
 	            ?>
             </p>
         </div>
@@ -72,7 +81,11 @@ $plant   = Plant::init( $plantid );
             <h5 class="title is-5 pt-3">Bodentemperatur</h5>
             <p id="temp_SOIL">
 	            <?php
-	            echo sprintf("%s (%s °C)",Plant::getInfoText($tempStatus), number_format($plant->getTemp(), 1, ",", "."));
+                if($plant->getTemp() == getBigValue()){ 
+                    echo showExplanationForNoValue();
+                } else {
+                    echo sprintf("%s (%s °C)",Plant::getInfoText($tempStatus), number_format($plant->getTemp(), 1, ",", "."));
+	            }
 	            ?>
             </p>
         </div>
