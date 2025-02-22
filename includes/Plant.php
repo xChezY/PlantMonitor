@@ -1,12 +1,15 @@
 <?php
 
+
 namespace PlantMonitor;
+
+require_once 'helpers.php'; // Include the helpers.php file
 
 use DateTime;
 
 class Plant
 {
-    private function __construct(
+    public function __construct(
         readonly string $plant_id,
         readonly DateTime $date,
         readonly float $longitude,
@@ -134,6 +137,13 @@ class Plant
         $config_plant_data = $cfg_manager->getPlantConfig($plant_id);
 
         $current_plant = end($current_plant_data);
+
+        if(sizeof($current_plant_data) == 0){
+
+            echo("<p class='is-size-5 has-text-centered'>Das sind keine echten Daten sondern nur zum testen :)</p>");
+
+            return dummyData();
+        }
 
         return new Plant(
             $plant_id,

@@ -22,7 +22,7 @@ class Database
     {
         $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
         $dotenv->load();
-        $this->client  = new Client();
+        $this->client  = new Client(["verify" => false]);
         $this->baseURL = $_ENV['INFLUX_DB_URL'] ?? "";
         $this->apiKey  = $_ENV['INFLUX_DB_API_KEY'] ?? "";
         $this->bucket  = $_ENV["BUCKET"] ?? "";
