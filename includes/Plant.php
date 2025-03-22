@@ -4,14 +4,11 @@
 namespace PlantMonitor;
 
 require_once 'helpers.php'; // Include the helpers.php file
-require_once 'constants.php'; // Include the constants.php file
 
 use DateTime;
 
 class Plant
 {
-    private $plantsLabelingInDB;
-
     public function __construct(
         readonly string $plant_id,
         readonly DateTime $date,
@@ -27,8 +24,6 @@ class Plant
         readonly float $max_water,
         readonly float $water
     ) {
-        global $plantsLabelingInDB;
-        $this->plantsLabelingInDB = $plantsLabelingInDB;
     }
 
     public function getPlantId()
@@ -143,8 +138,6 @@ class Plant
 
         $current_plant = end($current_plant_data);
 
-        console_log($current_plant);
-
         if(sizeof($current_plant_data) == 0){
 
             echo("<p class='is-size-5 has-text-centered'>Das sind keine echten Daten sondern nur zum testen :)</p>");
@@ -152,26 +145,20 @@ class Plant
             return dummyData();
         }
 
-        $water = $current_plant[getDBLabeling()[$plant_id]["WATER"]]??getBigValue();
-        $conduct = $current_plant[getDBLabeling()[$plant_id]["CONDUCT"]]??getBigValue();
-        $temp = $current_plant[getDBLabeling()[$plant_id]["TEMPERATURE"]]??getBigValue();
-        $longitude = $current_plant[getDBLabeling()[$plant_id]["LONGITUDE"]]??getBigValue();
-        $latitude = $current_plant[getDBLabeling()[$plant_id]["LATITUDE"]]??getBigValue();
-
         return new Plant(
             $plant_id,
             new DateTime($current_plant["date"]),
-            $longitude,
-            $latitude,
+            $current_plant["longitude"],
+            $current_plant["latitude"],
             $config_plant_data["temp"]["min"],
             $config_plant_data["temp"]["max"],
-            $temp,
+            $current_plant["temp_SOIL"],
             $config_plant_data["conduct"]["min"],
             $config_plant_data["conduct"]["max"],
-            $conduct,
+            $current_plant["conduct_SOIL"],
             $config_plant_data["water"]["min"],
             $config_plant_data["water"]["max"],
-            $water
+            $current_plant["water_SOIL"],
         );
     }
 
