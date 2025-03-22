@@ -54,10 +54,9 @@ require_once './vendor/autoload.php' ;
                 <div class="cell">
                     <div class="card">
                         <div class="card-image">
-                            <figure class="image is-1by1">
-                                <img src="\assets\PlantWithSensor.png"
-                                     alt="Merlin Hofmann"/>
-                                     <figcaption>Merlin Hofmann</figcaption>
+                            <figure class="image is-2by2">
+                                <img src="\assets\PlantWithSensor.jpg"
+                                     alt="PlantWithSensor"/>
                             </figure>
                         </div>
                     </div>
