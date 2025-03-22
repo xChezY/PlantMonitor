@@ -55,11 +55,11 @@ class Database
         $query = '
 	        from(bucket: "' . $this->bucket . '")
 	        |> range(start: -' . $this->range . ')
-	        |> filter(fn: (r) => exists r.deviceName)
-	        |> keep(columns: ["deviceName"])
-	        |> distinct(column: "deviceName")
+	        |> filter(fn: (r) => exists r.device_id)
+	        |> keep(columns: ["device_id"])
+	        |> distinct(column: "device_id")
 	        |> group(columns: [])
-	        |> count(column: "deviceName")
+	        |> count(column: "device_id")
 	    ';
         $array = explode(",", $this->makeRequest($query));
 
@@ -87,10 +87,10 @@ class Database
         $query = '
 	        from(bucket: "' . $this->bucket . '")
 	        |> range(start: -' . $this->range . ')
-	        |> filter(fn: (r) => r.deviceName == "' . $plantID . '")
-	        |> filter(fn: (r) => r._measurement == "coop_garden")
-	        |> filter(fn: (r) => r._field == "Rain" or r._field == "Temperature" or r._field == "conduct_SOIL" or r._field == "location_latitude" or r._field == "location_longitude")
-	        |> keep(columns: ["_time", "_value", "_field", "deviceName"])
+	        |> filter(fn: (r) => r.device_id == "' . $plantID . '")
+	        |> filter(fn: (r) => r._measurement == "ttn_vhs")
+	        |> filter(fn: (r) => r._field == "water_SOIL" or r._field == "temp_SOIL" or r._field == "conduct_SOIL" or r._field == "latitude" or r._field == "longitude")
+	        |> keep(columns: ["_time", "_value", "_field", "device_id"])
 	    ';
 
         $formatteddata = explode(",_result,", str_replace(",result,", "", $this->makeRequest($query)));
@@ -107,7 +107,7 @@ class Database
                 continue;
             }
 
-            list($table, $time, $value, $field, $deviceName) = $values;
+            list($table, $time, $value, $field, $device_id) = $values;
 
             $timestamp = $this->convertToTimestamp($time);
 

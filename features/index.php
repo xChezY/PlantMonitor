@@ -23,7 +23,7 @@ use PlantMonitor\ConfigManager;
 View::get( "navbar" );
 
 $safeget = htmlspecialchars( $_GET["plant"] ?? "", ENT_QUOTES, "UTF-8" );
-$plantid = $safeget ?: "Mitwirkgarten-Barani-MeteoHelix-1";
+$plantid = $safeget ?: "lse01-vhs-projekt";
 $plant   = Plant::init( $plantid );
 
 
