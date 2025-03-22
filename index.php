@@ -11,9 +11,28 @@ require_once './vendor/autoload.php' ;
     <title>Homepage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <style>
+        <style>
         html {
             scroll-behavior: smooth;
         }
+        /* Light mode specific styles */
+        body {
+            background-color: white;
+            color: black;
+        }
+        .card {
+            background-color: white;
+        }
+        .navbar, .footer {
+            background-color: white;
+        }
+        .card-image {
+            background-color: white;
+            height: 90px;
+            display: flex;
+            allign-items: center;
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -88,6 +107,7 @@ require_once './vendor/autoload.php' ;
                 <div class="cell is-col-start-4">
                     <div class="card">
                         <div class="card-image">
+
                             <figure class="image" style="padding: 20px";>
                                 <img src="\assets\merona-schriftzug-neu.svg"/>
                             </figure>
@@ -105,5 +125,6 @@ require_once './vendor/autoload.php' ;
 </section>
 <?php include 'parts/footer.php'; ?>
 </body>
+
 
 </html>
