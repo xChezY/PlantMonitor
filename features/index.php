@@ -7,6 +7,53 @@
     <title>PlanMonitor</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Light mode specific styles */
+        body {
+            background-color: white;
+            color: black;
+        }
+
+        .card {
+            background-color: white;
+        }
+
+        .navbar, .footer {
+            background-color: white;
+        }
+
+        .card-image.logo {
+            background-color: white;
+            height: 90px;
+            display: flex;
+            allign-items: center;
+        }
+
+        .title {
+            color: black;
+        }
+
+        .subtitle {
+            color: black;
+        }
+
+        .content {
+            color: black;
+        }
+
+        .card-content h5 {
+            color: black;
+        }
+
+         .box {
+            background-color: white;
+            box-shadow: 4px 4px 20px 0px #00000040;
+        }
+    </style>
 </head>
 
 <body>

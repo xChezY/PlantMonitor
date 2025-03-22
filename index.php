@@ -11,7 +11,6 @@ require_once './vendor/autoload.php' ;
     <title>Homepage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <style>
-        <style>
         html {
             scroll-behavior: smooth;
         }
@@ -32,7 +31,18 @@ require_once './vendor/autoload.php' ;
             display: flex;
             allign-items: center;
         }
-    </style>
+        .title{
+            color: black;
+        }
+        .subtitle{
+            color: black;
+        }
+        .content{
+            color: black;
+        }
+        .card-content h5{
+            color: black;
+        }
     </style>
 </head>
 <body>
