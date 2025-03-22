@@ -55,7 +55,7 @@ require_once './vendor/autoload.php' ;
                     <div class="card">
                         <div class="card-image">
                             <figure class="image is-2by2">
-                                <img src="\assets\PlantWithSensor.jpg"
+                                <img src="\assets\PlantWithSensor.JPG"
                                      alt="PlantWithSensor"/>
                             </figure>
                         </div>
