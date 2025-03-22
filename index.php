@@ -26,7 +26,7 @@ require_once './vendor/autoload.php' ;
         .navbar, .footer {
             background-color: white;
         }
-        .card-image {
+        .card-image.logo {
             background-color: white;
             height: 90px;
             display: flex;
@@ -90,7 +90,7 @@ require_once './vendor/autoload.php' ;
             <div class="grid">
                 <div class="cell is-col-start-2">
                     <div class="card">
-                        <div class="card-image">
+                        <div class="card-image logo">
                             <figure class="image">
                                 <img src="\assets\SmartCityLogo.png"
                                      alt="Placeholder image"/>
@@ -106,7 +106,7 @@ require_once './vendor/autoload.php' ;
                 </div>
                 <div class="cell is-col-start-4">
                     <div class="card">
-                        <div class="card-image">
+                        <div class="card-image logo">
 
                             <figure class="image" style="padding: 20px";>
                                 <img src="\assets\merona-schriftzug-neu.svg"/>
