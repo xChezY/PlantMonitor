@@ -14,6 +14,35 @@ require_once './vendor/autoload.php' ;
         html {
             scroll-behavior: smooth;
         }
+        /* Light mode specific styles */
+        body {
+            background-color: white;
+            color: black;
+        }
+        .card {
+            background-color: white;
+        }
+        .navbar, .footer {
+            background-color: white;
+        }
+        .card-image.logo {
+            background-color: white;
+            height: 90px;
+            display: flex;
+            allign-items: center;
+        }
+        .title{
+            color: black;
+        }
+        .subtitle{
+            color: black;
+        }
+        .content{
+            color: black;
+        }
+        .card-content h5{
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -35,10 +64,9 @@ require_once './vendor/autoload.php' ;
                 <div class="cell">
                     <div class="card">
                         <div class="card-image">
-                            <figure class="image is-1by1">
-                                <img src="\assets\PlantWithSensor.png"
-                                     alt="Merlin Hofmann"/>
-                                     <figcaption>Merlin Hofmann</figcaption>
+                            <figure class="image is-2by2">
+                                <img src="\assets\PlantWithSensor.JPG"
+                                     alt="PlantWithSensor"/>
                             </figure>
                         </div>
                     </div>
@@ -71,7 +99,7 @@ require_once './vendor/autoload.php' ;
             <div class="grid">
                 <div class="cell is-col-start-2">
                     <div class="card">
-                        <div class="card-image">
+                        <div class="card-image logo">
                             <figure class="image">
                                 <img src="\assets\SmartCityLogo.png"
                                      alt="Placeholder image"/>
@@ -87,7 +115,8 @@ require_once './vendor/autoload.php' ;
                 </div>
                 <div class="cell is-col-start-4">
                     <div class="card">
-                        <div class="card-image">
+                        <div class="card-image logo">
+
                             <figure class="image" style="padding: 20px";>
                                 <img src="\assets\merona-schriftzug-neu.svg"/>
                             </figure>
@@ -105,5 +134,6 @@ require_once './vendor/autoload.php' ;
 </section>
 <?php include 'parts/footer.php'; ?>
 </body>
+
 
 </html>
