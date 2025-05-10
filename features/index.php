@@ -66,6 +66,7 @@ use PlantMonitor\Icons;
 use PlantMonitor\Plant;
 use PlantMonitor\View;
 use PlantMonitor\ConfigManager;
+use chillerlan\QRCode\{QRCode, QROptions};
 
 View::get( "navbar" );
 
@@ -74,11 +75,6 @@ $plantid = $safeget ?: "lse01-vhs-projekt";
 $plant   = Plant::init( $plantid );
 
 
-?>
-
-<?php
-
-// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
 
 ?>
 <!-- TODO: Alle Elemente innerhalb der Blocks zentrieren -->
@@ -128,6 +124,14 @@ $plant   = Plant::init( $plantid );
 
 
 </div>
+
+<?php
+$baseUrl = $_ENV['BASE_URL'];
+$data   = $baseUrl."features/qrcode?plant=".$plant->getPlantId();
+
+?>
+<div class="has-text-centered"><a href="<?php echo $data; ?>" download>QR-Code herunterladen</a></div>
+
 
 <div class="pt-4 px-6 field">
     <label class="label has-text-centered" for="pflanzeDropdown">Wähle eine Pflanze</label>
