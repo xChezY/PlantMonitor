@@ -40,6 +40,7 @@ class Database
                 "headers" => [
                     "Authorization" => "Token " . $this->apiKey,
                     "Content-Type"  => "application/vnd.flux",
+	                "Accept"        => "application/csv",
                 ],
                 "body"    => $query,
                 "query"   => [ "orgID" => $this->orgID ] // todo: move to .env
