@@ -132,8 +132,7 @@ class Database
         |> range(start: -4h)
     ';
 
-    $response = $this->makeRequest($query);
-    return json_decode($response, true);
+    return $this->makeRequest($query);
 }
 
 public function getAllFormattedData()
