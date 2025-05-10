@@ -1,0 +1,43 @@
+plants:
+  lse01-vhs-projekt:
+    conduct:
+      min: 300
+      max: 800
+    water:
+      min: 50
+      max: 80
+    temp:
+      min: 20
+      max: 30
+  Mitwirkgarten-Barani-MeteoHelix-2:
+    conduct:
+      min: 300
+      max: 800
+    water:
+      min: 50
+      max: 80
+    temp:
+      min: 20
+      max: 30
+  Mitwirkgarten-MilesightWTS305-1:
+    conduct:
+      min: 300
+      max: 800
+    water:
+      min: 50
+      max: 80
+    temp:
+      min: 20
+      max: 30
+  Mitwirkgarten-SenseCAP-S2105-1:
+    conduct:
+      min: 300
+      max: 800
+    water:
+      min: 50
+      max: 80
+    temp:
+      min: 20
+      max: 30
+
+
