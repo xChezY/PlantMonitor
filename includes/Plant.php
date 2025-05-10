@@ -2,9 +2,6 @@
 
 
 namespace PlantMonitor;
-
-require_once 'helpers.php'; // Include the helpers.php file
-
 use DateTime;
 
 class Plant
@@ -138,11 +135,9 @@ class Plant
 
         $current_plant = end($current_plant_data);
 
-        if(sizeof($current_plant_data) == 0){
 
-            echo("<p class='is-size-5 has-text-centered'>Das sind keine echten Daten sondern nur zum testen :)</p>");
-
-            return dummyData();
+        if(count($current_plant_data) === 0){
+            return self::initDummyPlant();
         }
 
         return new Plant(
@@ -163,34 +158,24 @@ class Plant
     }
 
 
-    public static function initPlants($plant_id): array
-    {
+	public static function initDummyPlant(){
+		return new Plant(
+			"1",
+			new DateTime(),
+			0,
+			0,
+			20,
+			30,
+			Utils::giveRandomFloat(-10, 40),
+			300,
+			800,
+			Utils::giveRandomFloat(0, 1000),
+			50,
+			80,
+			Utils::giveRandomFloat(0, 100),
+		);
+	}
 
-        $plants = [];
-
-        $database = new Database();
-        $current_plant = $database->getPlantData($plant_id);
-
-        $cfg_manager = new ConfigManager();
-        $values_plant = $cfg_manager->getPlantConfig($plant_id);
-
-        foreach (array_keys($current_plant) as $timestamp) {
-            array_push($plants, Plant::init($plant_id));
-        }
-
-        return $plants;
-    }
-
-    public static function initPlantbyTimeStamp($plant_id, $timestamp)
-    {
-        $database = new Database();
-        $current_plant = $database->getPlantData($plant_id);
-
-        $cfg_manager = new ConfigManager();
-        $values_plant = $cfg_manager->getPlantConfig($plant_id);
-
-        return Plant::init($plant_id);
-    }
 
 	public static function getInfoText($status): string{
 		return match ( $status ) {
