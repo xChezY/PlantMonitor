@@ -9,17 +9,7 @@ class Plant
     public function __construct(
         readonly string $plant_id,
         readonly DateTime $date,
-        readonly float $longitude,
-        readonly float $latitude,
-        readonly float $min_temp,
-        readonly float $max_temp,
-        readonly float $temp,
-        readonly float $min_conduct,
-        readonly float $max_conduct,
-        readonly float $conduct,
-        readonly float $min_water,
-        readonly float $max_water,
-        readonly float $water
+	    readonly array $plant_data,
     ) {
     }
 
@@ -28,89 +18,35 @@ class Plant
         return $this->plant_id;
     }
 
-    public function getTimestamp()
-    {
-        return $this->plant_id;
-    }
 
     public function getDate()
     {
         return $this->date;
     }
 
-    public function getLongitude()
-    {
-        return $this->plant_id;
-    }
-
-    public function getLatitude()
-    {
-        return $this->plant_id;
-    }
-
-    public function getMinTemp()
-    {
-        return $this->min_temp;
-    }
-
-    public function getMaxTemp()
-    {
-        return $this->max_temp;
-    }
-
-    public function getTemp()
-    {
-        return $this->temp;
-    }
-
-    public function getMinWater()
-    {
-        return $this->min_water;
-    }
-
-    public function getMaxWater()
-    {
-        return $this->max_water;
-    }
-
-
-    public function getWater()
-    {
-        return $this->water;
-    }
-
-    public function getMinConduct()
-    {
-        return $this->min_conduct;
-    }
-
-    public function getMaxConduct()
-    {
-        return $this->max_conduct;
-    }
-
-
-    public function getConduct()
-    {
-        return $this->conduct;
-    }
+	/**
+	 * return array<string, array{min: float|int|null, value: float|int|null, max: float|int|null}>
+	 */
+	public function getPlantData(): array{
+		return $this->plant_data;
+	}
 
     //Bewertungsfunktion ob Temperatur okay ist (mithilfe von Enum)
-    public function getTempStatus(): PlantStatus
-    {
-        return $this->evaluateValue($this->temp, $this->min_temp, $this->max_temp);
-    }
-    public function getConductStatus(): PlantStatus
-    {
-        return $this->evaluateValue($this->conduct, $this->min_conduct, $this->max_conduct);
-    }
+//    public function getTempStatus(): PlantStatus
+//    {
+//        return $this->evaluateValue($this->temp, $this->min_temp, $this->max_temp);
+//    }
+//    public function getConductStatus(): PlantStatus
+//    {
+//        return $this->evaluateValue($this->conduct, $this->min_conduct, $this->max_conduct);
+//    }
+//
+//    public function getWaterStatus(): PlantStatus
+//    {
+//        return $this->evaluateValue($this->water, $this->min_water, $this->max_water);
+//    }
 
-    public function getWaterStatus(): PlantStatus
-    {
-        return $this->evaluateValue($this->water, $this->min_water, $this->max_water);
-    }
-
-    private function evaluateValue($value, $min, $max): PlantStatus
+    public static function evaluateValue($value, $min, $max): PlantStatus
     {
 
         if ($value > $max) {
@@ -124,57 +60,74 @@ class Plant
 
     }
 
-    public static function init($plant_id)
+    public static function init(string $plant_id)
     {
-
-        $database = new Database();
+	    $plant_id = trim($plant_id);
+	    $database = new Database();
         $cfg_manager = new ConfigManager();
 
-        $current_plant_data = $database->getPlantData($plant_id);
-        $config_plant_data = $cfg_manager->getPlantConfig($plant_id);
-
-        $current_plant = end($current_plant_data);
+        $plant_config = $cfg_manager->getPlantConfig($plant_id);
 
 
-        if(count($current_plant_data) === 0){
-            return self::initDummyPlant();
-        }
+        // Get alle Field Names from the config
+        $fieldNames = array_map(function($valueConfig) {return $valueConfig['fieldName'];}, $plant_config);
 
-        return new Plant(
+
+	    $fluxSetString = '"' . implode('", "', array_values($fieldNames)) . '"';
+
+	    $range = "24h";
+        $plant_id = trim($plant_id);
+
+		$result =$database->query ('
+	        range(start: -' . $range . ')
+	        |> filter( 
+	            fn: (r) => r.deviceName == "'.$plant_id.'",
+	        )
+	        |> filter( 
+	            fn: (r) => contains(value: r._field, set: ['.$fluxSetString.']),
+	        )
+	        |> group(columns: ["_field"])
+            |> last()
+	        |> keep(columns: ["_time", "_value", "_field"])
+	        |> yield()
+	    ');
+
+
+		//TODO Fehler behandlung wenn daten Fehlen.
+
+
+        $result =  Utils::csvStringToArray($result);
+
+	    $sensorReadingDate = new DateTime($result[0]["_time"]);
+	    $sensorReading = [];
+
+       foreach ($result as $data) {
+           $dataFieldName = $data["_field"];
+
+		   $field ="";
+		   foreach ($fieldNames as $fieldName => $sensorFieldName) {
+                if($sensorFieldName == $dataFieldName){
+	                $field = $fieldName;
+					break;
+                }
+		   }
+
+	       $sensorReading[ $field ] = [
+			   "min" => $plant_config[$field]["min"],
+			   "value" => $data["_value"],
+		       "max" =>$plant_config[$field]["max"],
+	       ];
+       }
+
+
+
+       return new Plant(
             $plant_id,
-            new DateTime($current_plant["date"]),
-            $current_plant["longitude"],
-            $current_plant["latitude"],
-            $config_plant_data["temp"]["min"],
-            $config_plant_data["temp"]["max"],
-            $current_plant["temp_SOIL"],
-            $config_plant_data["conduct"]["min"],
-            $config_plant_data["conduct"]["max"],
-            $current_plant["conduct_SOIL"],
-            $config_plant_data["water"]["min"],
-            $config_plant_data["water"]["max"],
-            $current_plant["water_SOIL"],
+	       $sensorReadingDate,
+	       $sensorReading
         );
     }
 
-
-	public static function initDummyPlant(){
-		return new Plant(
-			"1",
-			new DateTime(),
-			0,
-			0,
-			20,
-			30,
-			Utils::giveRandomFloat(-10, 40),
-			300,
-			800,
-			Utils::giveRandomFloat(0, 1000),
-			50,
-			80,
-			Utils::giveRandomFloat(0, 100),
-		);
-	}
 
 
 	public static function getInfoText($status): string{

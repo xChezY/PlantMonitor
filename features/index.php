@@ -49,7 +49,7 @@
             color: black;
         }
 
-         .box {
+        .box {
             background-color: white;
             box-shadow: 4px 4px 20px 0px #00000040;
         }
@@ -69,65 +69,69 @@ use PlantMonitor\ConfigManager;
 
 View::get( "navbar" );
 
-$safeget = htmlspecialchars( $_GET["plant"] ?? "", ENT_QUOTES, "UTF-8" );
-$plantid = $safeget ?: "lse01-vhs-projekt";
-$plant   = Plant::init( $plantid );
+$plantParameter = htmlspecialchars( $_GET["plant"] ?? "", ENT_QUOTES, "UTF-8" );
+
+if($plantParameter):
+	$plant   = Plant::init( $plantParameter );
+    ?>
 
 
-?>
+    <div class="block pl-6 pr-6">
 
-<?php
+		<?php
 
-// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
+		// TODO Hinweis ergänzen das der Sensor sich alle 20min updatet daher man nicht extrem viel wasser drauf tun soll.
 
-?>
-<!-- TODO: Alle Elemente innerhalb der Blocks zentrieren -->
-<div class="block pl-6 pr-6">
-    <div class="block">
-        <div class="box has-text-centered" type="text">
-	        <?php
-            $waterStatus = $plant->getWaterStatus();
-            Icons::createIcon( "water-drop", $waterStatus); ?>
-            <h5 class="title is-5 pt-3">Bodenfeuchtigkeit</h5>
-            <p id="water_SOIL">
-				<?php
-                echo sprintf("%s (%s %%)",Plant::getInfoText($waterStatus), number_format($plant->getWater(), 2, ",", "."));
-                ?>
-            </p>
-        </div>
+		$plantData = $plant->getPlantData();
+
+		foreach ( $plantData as $measurementName => $values ) :
+			["min" => $min, "value" => $value,  "max" => $max ] = $values;
+			?>
+
+            <div class="block">
+                <div class="box has-text-centered" type="text">
+					<?php
+					$status= Plant::evaluateValue( $value, $min, $max );
+
+					$iconName = "";
+
+					$iconName = match ($measurementName) {
+						"conduct" => "conduct",
+						"water" => "water-drop",
+						"temp" => "thermometer",
+						"ph" => "conduct",
+					};
+
+					// TODO richtige einheit auswählen
+					$unit = "platzhalter";
+
+					Icons::createIcon( $iconName, $status ); ?>
+                    <h5 class="title is-5 pt-3"><?= $measurementName; ?></h5>
+                    <p>
+						<?php
+
+
+						echo sprintf( "%s (%s %s)", Plant::getInfoText( $status ), number_format( $value, 2, ",", "." ) ,$unit);
+						?>
+                    </p>
+                </div>
+            </div>
+
+		<?php endforeach; ?>
+
+
+
     </div>
 
-    <div class="block">
-        <div class="box has-text-centered" type="text">
-	        <?php
-            $conductStatus = $plant->getConductStatus();
-            Icons::createIcon( "conduct", $conductStatus ); ?>
-            <h5 class="title is-5 pt-3">Bodenleitfähigkeit</h5>
-            <p id="conduct_SOIL">
-	            <?php
-	            echo sprintf("%s (%s µS)",Plant::getInfoText($conductStatus), number_format($plant->getConduct(), 1, ",", "."));
-	            ?>
-            </p>
-        </div>
-    </div>
 
-    <div class="block">
-        <div class="box has-text-centered" type="text">
-	        <?php
-            $tempStatus = $plant->getTempStatus();
-            Icons::createIcon( "thermometer", $tempStatus ); ?>
-            <h5 class="title is-5 pt-3">Bodentemperatur</h5>
-            <p id="temp_SOIL">
-	            <?php
-	            echo sprintf("%s (%s °C)",Plant::getInfoText($tempStatus), number_format($plant->getTemp(), 1, ",", "."));
-	            ?>
-            </p>
-        </div>
-    </div>
+<?php else: ?>
+
+<h2>Bitte wähle einen Sensor</h2>
+
+<?php endif; ?>
 
 
 
-</div>
 
 <div class="pt-4 px-6 field">
     <label class="label has-text-centered" for="pflanzeDropdown">Wähle eine Pflanze</label>
@@ -141,7 +145,7 @@ $plant   = Plant::init( $plantid );
 					foreach ( $configmanager->getAllPlantsIds() as $plantId ) { ?>
                         <option
                                 value="<?php echo $plantId ?>"
-							<?php if ( isset( $safeget ) && $safeget == $plantId ) { ?>
+							<?php if ( isset( $plantParameter ) && $plantParameter == $plantId ) { ?>
                                 selected
 							<?php } ?>
                         >

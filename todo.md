@@ -1,0 +1,3 @@
+- [x] DB Fixen
+- [ ] Kernal.php bauen damit man autoloader nicht laden muss
+- [ ] Router bauen
