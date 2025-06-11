@@ -75,6 +75,13 @@ if($plantParameter):
 	$plant   = Plant::init( $plantParameter );
     ?>
 
+	<?php
+	$baseUrl = $_ENV['BASE_URL'];
+	$data   = $baseUrl."features/qrcode?plant=".$plant->getPlantId();
+
+	?>
+    <div class="has-text-centered"><a href="<?php echo $data; ?>" download>QR-Code herunterladen</a></div>
+
 
     <div class="block pl-6 pr-6">
 

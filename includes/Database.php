@@ -9,12 +9,8 @@ use GuzzleHttp\Client;
 class Database {
 	private Client $client;
 	private string $baseURL;
-
 	private string $apiKey;
-
 	private string $bucket;
-	private $range = "4h";
-
 	private string $orgID;
 
 	public function __construct() {
@@ -43,14 +39,14 @@ class Database {
 					"Accept"        => "application/csv",
 				],
 				"body"    => $query,
-				"query"   => [ "orgID" => $this->orgID ] // todo: move to .env
+				"query"   => [ "orgID" => $this->orgID ]
 			]
 		);
 
 		return (string) $res->getBody();
 	}
 
-	public function query( string $query ) {
+	public function query( string $query ) : string {
 		$query = 'from(bucket: "' . $this->bucket . '") |>
 		' . $query;
 
