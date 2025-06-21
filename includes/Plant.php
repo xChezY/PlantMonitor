@@ -93,10 +93,12 @@ class Plant
 	    ');
 
 
-		//TODO Fehler behandlung wenn daten Fehlen.
 
 
         $result =  Utils::csvStringToArray($result);
+        if(!$result){
+            return false;
+        }
 
 	    $sensorReadingDate = new DateTime($result[0]["_time"]);
 	    $sensorReading = [];
