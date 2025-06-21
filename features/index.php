@@ -109,8 +109,12 @@ if($plantParameter):
 						"ph" => "conduct",
 					};
 
-					// TODO richtige einheit auswählen
-					$unit = "platzhalter";
+					$unit = match($measurementName) {
+                        "conduct" => "µS",
+                        "water" => "%",
+                        "temp" => "°C",
+                        "ph" => "(pH)",
+                    };
 
 					Icons::createIcon( $iconName, $status ); ?>
                     <h5 class="title is-5 pt-3"><?= $measurementName; ?></h5>
