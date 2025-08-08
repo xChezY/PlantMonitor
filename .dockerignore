@@ -33,6 +33,5 @@
 **/vendor
 LICENSE
 README.md
-config.yaml
 config.example.yaml
 
