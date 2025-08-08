@@ -9,8 +9,11 @@ readonly class Utils {
     }
 
 
-    public static function csvStringToArray(string $csv): array {
+    public static function csvStringToArray(string $csv): array | false{
         // Zeilen aufsplitten
+        if (!$csv){
+            return false;
+        }
         $lines = explode("\n", trim($csv));
 
         // Header-Zeile extrahieren und trimmen
@@ -45,4 +48,4 @@ readonly class Utils {
     }
 
 }
-?>
+
