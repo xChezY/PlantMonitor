@@ -2,68 +2,56 @@ plants:
   Dragino-LSPH01-1-Kuckuck:
     ph:
       fieldName: "fPH1_SOIL"
-      min: 0,5
-      max: 1
+      min: 5
+      max: 7
     temp:
       fieldName: "fTEMP_SOIL"
-      min: 20
+      min: 7
       max: 30
   Dragino-LSPH01-3-Himmelreich:
     ph:
       fieldName: "fPH1_SOIL"
-      min: 300
-      max: 800
+      min: 5
+      max: 7
     temp:
       fieldName: "fTEMP_SOIL"
-      min: 20
+      min: 7
       max: 30
   DraginoLSPH01-2-Kuckuck:
     ph:
       fieldName: "fPH1_SOIL"
-      min: 300
-      max: 800
+      min: 5
+      max: 7
     temp:
       fieldName: "fTEMP_SOIL"
-      min: 20
+      min: 7
       max: 30
   SenseCAP-S2105-1-Kuckuck:
-    conduct:
-      fieldName: "data_messages_soil_ec"
-      min: 300
-      max: 800
     water:
       fieldName: "data_messages_soil_moisture"
-      min: 50
-      max: 80
+      min: 20
+      max: 50
     temp:
       fieldName: "data_messages_soil_temp"
-      min: 20
+      min: 7
       max: 30
   SenseCAP-S2105-4-SC-Buero:
-    conduct:
-      fieldName: "data_messages_soil_ec"
-      min: 300
-      max: 800
     water:
       fieldName: "data_messages_soil_moisture"
-      min: 50
-      max: 80
+      min: 20
+      max: 50
     temp:
       fieldName: "data_messages_soil_temp"
-      min: 20
+      min: 7
       max: 30
   SenseCAP-S2105-5-Himmelreich:
-    conduct:
-      fieldName: "data_messages_soil_ec"
-      min: 300
-      max: 800
     water:
       fieldName: "data_messages_soil_moisture"
-      min: 50
-      max: 80
+      min: 20
+      max: 50
     temp:
       fieldName: "data_messages_soil_temp"
-      min: 20
+      min: 7
       max: 30
 
 
