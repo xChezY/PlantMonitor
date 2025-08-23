@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="is-light">
+<html lang="de" class="theme-light">
 
 <head>
     <meta charset="UTF-8">
@@ -70,6 +70,7 @@ use PlantMonitor\ConfigManager;
 View::get("navbar");
 
 $plantParameter = htmlspecialchars($_GET["plant"] ?? "", ENT_QUOTES, "UTF-8");
+$dev = isset($_GET["dev"]);
 
 if ($plantParameter):
     $plant = Plant::init($plantParameter);
@@ -148,12 +149,12 @@ if ($plantParameter):
 
 <?php else: ?>
 
-    <h2>Bitte wähle einen Sensor</h2>
+    <h2 style="display: none">Bitte wähle einen Sensor</h2>
 
 <?php endif; ?>
 
 
-<div class="pt-4 px-6 field">
+<div class="pt-4 px-6 field" <?php echo !$dev ? 'style="display: none"':""; ?>>
     <label class="label has-text-centered" for="pflanzeDropdown">Wähle eine Pflanze</label>
     <form method="GET">
         <div class="control">
