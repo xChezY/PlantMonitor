@@ -82,9 +82,12 @@ if ($plantParameter):
         $data = $baseUrl . "features/qrcode?plant=" . $plant->getPlantId();
 
         ?>
+        <h1 class="has-text-centered title is-4 pt-3"><?php echo $plant->name;?></h1>
         <div class="has-text-centered">Sensoren aktualisieren sich alle 20 Minuten</div>
-        <div class="has-text-centered"><a href="<?php echo $data; ?>" download>QR-Code herunterladen</a></div>
 
+        <?php if($dev):?>
+            <div class="has-text-centered"><a href="<?php echo $data; ?>" download>QR-Code herunterladen</a></div>
+        <?php endif; ?>
 
         <div class="block pl-6 pr-6">
 

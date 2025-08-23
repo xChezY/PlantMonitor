@@ -1,5 +1,6 @@
 plants:
   Dragino-LSPH01-3-Himmelreich:
+    name: "Dragino im Himmelreich"
     ph:
       fieldName: "fPH1_SOIL"
       min: 5
@@ -9,6 +10,7 @@ plants:
       min: 7
       max: 30
   DraginoLSPH01-2-Kuckuck:
+    name: "Dragino im Kuckuck"
     ph:
       fieldName: "fPH1_SOIL"
       min: 5
@@ -18,6 +20,7 @@ plants:
       min: 7
       max: 30
   SenseCAP-S2105-1-Kuckuck:
+    name: "SenseCap im Kuckuck"
     water:
       fieldName: "data_messages_soil_moisture"
       min: 20
@@ -27,6 +30,7 @@ plants:
       min: 7
       max: 30
   SenseCAP-S2105-4-SC-Buero:
+    name: "SenseCap im Büro"
     water:
       fieldName: "data_messages_soil_moisture"
       min: 20
@@ -36,6 +40,7 @@ plants:
       min: 7
       max: 30
   SenseCAP-S2105-5-Himmelreich:
+    name: "SenseCap im Himmelreich"
     water:
       fieldName: "data_messages_soil_moisture"
       min: 20
@@ -44,7 +49,16 @@ plants:
       fieldName: "data_messages_soil_temp"
       min: 7
       max: 30
-
+  lse01-vhs-projekt:
+    name: "Goldpalme im Mitwirklabor"
+    water:
+      fieldName: "water_SOIL"
+      min: 20
+      max: 50
+    temp:
+      fieldName: "temp_SOIL"
+      min: 7
+      max: 30
 
 # "Dragino-LSPH01-1-Kuckuck","Dragino-LSPH01-3-Himmelreich","DraginoLSPH01-2-Kuckuck","SenseCAP-S2105-1-Kuckuck","SenseCAP-S2105-4-SC-Buero","SenseCAP-S2105-5-Himmelreich"
 # Dragino-LSPH01 -> fPH1_SOIL + fTEMP_SOIL

@@ -6,10 +6,12 @@ use DateTime;
 
 class Plant
 {
+
     public function __construct(
         readonly string $plant_id,
         readonly DateTime $date,
 	    readonly array $plant_data,
+        readonly string $name
     ) {
     }
 
@@ -30,21 +32,6 @@ class Plant
 	public function getPlantData(): array{
 		return $this->plant_data;
 	}
-
-    //Bewertungsfunktion ob Temperatur okay ist (mithilfe von Enum)
-//    public function getTempStatus(): PlantStatus
-//    {
-//        return $this->evaluateValue($this->temp, $this->min_temp, $this->max_temp);
-//    }
-//    public function getConductStatus(): PlantStatus
-//    {
-//        return $this->evaluateValue($this->conduct, $this->min_conduct, $this->max_conduct);
-//    }
-//
-//    public function getWaterStatus(): PlantStatus
-//    {
-//        return $this->evaluateValue($this->water, $this->min_water, $this->max_water);
-//    }
 
     public static function evaluateValue($value, $min, $max): PlantStatus
     {
@@ -67,10 +54,11 @@ class Plant
         $cfg_manager = new ConfigManager();
 
         $plant_config = $cfg_manager->getPlantConfig($plant_id);
+        $name = $plant_config['name'] ?? "";
 
 
         // Get alle Field Names from the config
-        $fieldNames = array_map(function($valueConfig) {return $valueConfig['fieldName'];}, $plant_config);
+        $fieldNames = array_filter(array_map(function($valueConfig) {return $valueConfig['fieldName']??null;}, $plant_config));
 
 
 	    $fluxSetString = '"' . implode('", "', array_values($fieldNames)) . '"';
@@ -81,7 +69,7 @@ class Plant
 		$result =$database->query ('
 	        range(start: -' . $range . ')
 	        |> filter( 
-	            fn: (r) => r.deviceName == "'.$plant_id.'",
+	            fn: (r) => r.deviceName == "'.$plant_id.'" or r.device_id == "'.$plant_id.'",
 	        )
 	        |> filter( 
 	            fn: (r) => contains(value: r._field, set: ['.$fluxSetString.']),
@@ -126,7 +114,8 @@ class Plant
        return new Plant(
             $plant_id,
 	       $sensorReadingDate,
-	       $sensorReading
+	       $sensorReading,
+           $name
         );
     }
 
