@@ -1,13 +1,4 @@
 plants:
-  Dragino-LSPH01-1-Kuckuck:
-    ph:
-      fieldName: "fPH1_SOIL"
-      min: 5
-      max: 7
-    temp:
-      fieldName: "fTEMP_SOIL"
-      min: 7
-      max: 30
   Dragino-LSPH01-3-Himmelreich:
     ph:
       fieldName: "fPH1_SOIL"
