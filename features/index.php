@@ -142,7 +142,8 @@ if ($plantParameter):
 
         </div>
     <?php } else {
-        echo "Keine Pflanzendaten vorhanden";
+        echo "<div class='has-text-centered'>Sensoren aktualisieren sich alle 20 Minuten</div>";
+
     } ?>
 
 <?php else: ?>
